@@ -70,7 +70,7 @@ public class PSTimelineController {
                 String emailIcon = paramMap.get('emailIcon');   // standard:email
                 String callIcon = paramMap.get('callIcon');     // standard:call
                 
-                for (Event e : [SELECT Id, Subject, ActivityDateTime, StartDateTime, EndDateTime FROM Event WHERE WhatId = :recordId])
+                for (Event e : [SELECT Id, Subject, Description, ActivityDateTime, StartDateTime, EndDateTime FROM Event WHERE WhatId = :recordId OR WhoId = :recordId])
                 {
                     PSTimelineItem item = new PSTimelineItem();
                     item.id = e.Id;
@@ -87,7 +87,7 @@ public class PSTimelineController {
                         item.content = body;
                     }
                     
-                    if (e.Subject.length() > truncSize) item.title = e.Subject;
+                    item.title = e.Description;
                     item.startDttm = e.ActivityDateTime;
                     item.type = itemType;
                     //item.className = 'red';
@@ -98,7 +98,7 @@ public class PSTimelineController {
                 ///////////////
                 // get tasks //
                 ///////////////
-                for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, Status FROM Task WHERE WhatId = :recordId])
+                for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, Status FROM Task WHERE WhatId = :recordId OR WhoId = :recordId])
                 {
                     PSTimelineItem item = new PSTimelineItem();
                     item.id = t.Id;
