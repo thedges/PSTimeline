@@ -16,19 +16,19 @@ This Lightning component is based on the [VisJS Timeline](http://visjs.org/docs/
    - <b>Show Tooltips</b> - boolean to determine if tooltips will show when you hover over an item 
 
    - <b>Show Activities</b> - boolean to show activities (tasks, events, emails, calls)
-   - <b>Task Icon</b> - the icon to show for tasks
-   - <b>Event Icon</b> - the icon to show for events
-   - <b>Email Icon</b> - the icon to show for email 
-   - <b>Call Icon</b> - the icon to show for calls
+   - <b>Task Icon</b> - the icon to show for tasks (default: "standard:task")
+   - <b>Event Icon</b> - the icon to show for events (default: "standard:event")
+   - <b>Email Icon</b> - the icon to show for email (default: "standard:email")
+   - <b>Call Icon</b> - the icon to show for calls (default: "standard:call")
 
    - <b>Show Chatter Posts</b> - boolean to show chatter text posts
-   - <b>Chatter Icon</b> - the icon to show for chatter text posts
+   - <b>Chatter Icon</b> - the icon to show for chatter text posts (default: "standard:post")
 
    - <b>Show Content Uploads (files)</b> - boolean to show content uploads (i.e. Chatter files) 
-   - <b>Content Icon</b> - the icon to show for content
+   - <b>Content Icon</b> - the icon to show for content (default: "standard:file")
 
    - <b>Show Case Comments</b> - boolean to show case comments
-   - <b>Case Comment Icon</b> - the icon to show for case comments
+   - <b>Case Comment Icon</b> - the icon to show for case comments (default: "custom:custom19")
 
 The component supports ability to child records for up to 5 related child objects. Configuration options are:
 
@@ -39,7 +39,10 @@ The component supports ability to child records for up to 5 related child object
    - <b>Child Label Field</b> - the sObject Field API name that contains the label to show in the timeline item 
    - <b>Child Date Field</b> - the sObject Field API name that contains the date or date/time field to plot on timeline  
 
-
+<b>NOTE:</b> For any icon values provided in the component configuration, you have 3 options:
+   1. Use a reference to one of the Lightning design icons defined [here](http://www.lightningdesignsystem.com/icons/). The format is <category>:<name> so for the first icon in the Action category, the configuration property would be "action:add_contact". For account icon down in the Standard category section, the configuration property would be "standard:account". The component is preconfigured using this approach.
+   2. Upload your own static resource file of images you want and reference normal way of "/resource/<image_name>"
+   3. Lastly is providing a full http/https URL to an image stored on some remote server
 
 <a href="https://githubsfdeploy.herokuapp.com">
   <img alt="Deploy to Salesforce"
