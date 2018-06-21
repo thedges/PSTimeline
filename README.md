@@ -51,6 +51,8 @@ The component supports ability to child records for up to 5 related child object
    2. Upload your own static resource file of images you want and reference normal way of "/resource/<image_name>"
    3. Lastly is providing a full http/https URL to an image stored on some remote server
 
+<b>Dependency:</b> Install the [LightningStrike.io](https://github.com/thedges/Lightning-Strike) and [PSCommon](https://github.com/thedges/PSCommon) packages first
+
 <a href="https://githubsfdeploy.herokuapp.com">
   <img alt="Deploy to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
