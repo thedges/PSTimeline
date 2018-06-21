@@ -308,26 +308,29 @@ public class PSTimelineController {
         {
             for (sObject rec : recList)
             {
-                PSTimelineItem item = new PSTimelineItem();
-                item.id = rec.Id;
-                
-                String iconHTML = getIconHTML(icon, 'x-small', networkPrefix, sldsResourceURL);
-                String label = (String)rec.get(labelField);
-                String body = cleanItemString(label, truncSize);
-                
-                if (iconHTML != null)
+                if (rec.get(dateField) != null)
                 {
-                    item.content = iconHTML + '<span class="slds-p-left_x-small" >' + body + '</span>';
+                    PSTimelineItem item = new PSTimelineItem();
+                    item.id = rec.Id;
+                    
+                    String iconHTML = getIconHTML(icon, 'x-small', networkPrefix, sldsResourceURL);
+                    String label = (String)rec.get(labelField);
+                    String body = cleanItemString(label, truncSize);
+                    
+                    if (iconHTML != null)
+                    {
+                        item.content = iconHTML + '<span class="slds-p-left_x-small" >' + body + '</span>';
+                    }
+                    else
+                    {
+                        item.content = body;
+                    }
+                    
+                    if (label.length() > truncSize) item.title = label;
+                    item.startDttm = (DateTime)rec.get(dateField);
+                    item.type = itemType;
+                    itemList.add(item);
                 }
-                else
-                {
-                    item.content = body;
-                }
-                
-                if (label.length() > truncSize) item.title = label;
-                item.startDttm = (DateTime)rec.get(dateField);
-                item.type = itemType;
-                itemList.add(item);
             }
         }
     }
