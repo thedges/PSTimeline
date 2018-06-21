@@ -40,7 +40,7 @@ The component supports ability to child records for up to 5 related child object
    - <b>Child Date Field</b> - the sObject Field API name that contains the date or date/time field to plot on timeline  
 
 <b>NOTE:</b> For any icon values provided in the component configuration, you have 3 options:
-   1. Use a reference to one of the Lightning design icons defined [here](http://www.lightningdesignsystem.com/icons/). The format is <category>:<name> so for the first icon in the Action category, the configuration property would be "action:add_contact". For account icon down in the Standard category section, the configuration property would be "standard:account". The component is preconfigured using this approach.
+   1. Use a reference to one of the Lightning design icons defined [here](http://www.lightningdesignsystem.com/icons/). The format of the configuration string is <category>:<name>. So for the first icon in the Action category, the configuration property would be "action:add_contact". For account icon down in the Standard category section, the configuration property would be "standard:account". The component is preconfigured using this approach.
    2. Upload your own static resource file of images you want and reference normal way of "/resource/<image_name>"
    3. Lastly is providing a full http/https URL to an image stored on some remote server
 
