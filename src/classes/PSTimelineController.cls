@@ -23,6 +23,43 @@ public class PSTimelineController {
             String networkPrefix = null;
             if (paramMap.containsKey('networkPrefix')) networkPrefix = paramMap.get('networkPrefix');
             
+            // **************** //
+            // get created date //
+            // **************** //
+            if (recordId != null && recordId.length() > 0)
+            {
+                Id myId = ID.valueOf(recordId);
+                String objectName = myId.getSObjectType().getDescribe().getName();
+                String objectLabel = myId.getSObjectType().getDescribe().getLabel();
+                
+                String queryStr = 'SELECT Id, CreatedDate FROM ' + objectName + ' WHERE Id = \'' + recordId + '\'';
+                System.debug('queryStr=' + queryStr);
+                List<sObject> recList = Database.query(queryStr);
+                if (recList != null && recList.size() == 1)
+                {
+                    PSTimelineItem item = new PSTimelineItem();
+                    //item.id = e.Id;
+                    
+                    String iconHTML = getIconHTML('custom:custom9', 'x-small', networkPrefix, sldsResourceURL);
+                    String body = objectLabel + ' created!';
+                    
+                    if (iconHTML != null)
+                    {
+                        item.content = iconHTML + '<span class="slds-p-left_x-small" >' +body + '</span>';
+                    }
+                    else
+                    {
+                        item.content = body;
+                    }
+                    
+                    item.startDttm = (Datetime)recList[0].get('CreatedDate');
+                    item.type = itemType;
+                    //item.className = 'red';
+                    itemList.add(item);
+                }
+            }
+            
+            
             ////////////////////
             // get activities //
             ////////////////////
@@ -221,32 +258,32 @@ public class PSTimelineController {
             
             if (paramMap.get('child1Flag') == 'true')
             {
-              getChildItems(itemList, recordId, i, paramMap.get('child1Icon'), paramMap.get('child1Object'), paramMap.get('child1ParentField'), 
-                            paramMap.get('child1LabelField'), paramMap.get('child1DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
+                getChildItems(itemList, recordId, i, paramMap.get('child1Icon'), paramMap.get('child1Object'), paramMap.get('child1ParentField'), 
+                              paramMap.get('child1LabelField'), paramMap.get('child1DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
             }
             
             if (paramMap.get('child2Flag') == 'true')
             {
-              getChildItems(itemList, recordId, i, paramMap.get('child2Icon'), paramMap.get('child2Object'), paramMap.get('child2ParentField'), 
-                            paramMap.get('child2LabelField'), paramMap.get('child2DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
+                getChildItems(itemList, recordId, i, paramMap.get('child2Icon'), paramMap.get('child2Object'), paramMap.get('child2ParentField'), 
+                              paramMap.get('child2LabelField'), paramMap.get('child2DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
             }
-
+            
             if (paramMap.get('child3Flag') == 'true')
             {
-              getChildItems(itemList, recordId, i, paramMap.get('child3Icon'), paramMap.get('child3Object'), paramMap.get('child3ParentField'), 
-                            paramMap.get('child3LabelField'), paramMap.get('child3DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
+                getChildItems(itemList, recordId, i, paramMap.get('child3Icon'), paramMap.get('child3Object'), paramMap.get('child3ParentField'), 
+                              paramMap.get('child3LabelField'), paramMap.get('child3DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
             }
-
+            
             if (paramMap.get('child4Flag') == 'true')
             {
-              getChildItems(itemList, recordId, i, paramMap.get('child4Icon'), paramMap.get('child4Object'), paramMap.get('child4ParentField'), 
-                            paramMap.get('child4LabelField'), paramMap.get('child4DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
+                getChildItems(itemList, recordId, i, paramMap.get('child4Icon'), paramMap.get('child4Object'), paramMap.get('child4ParentField'), 
+                              paramMap.get('child4LabelField'), paramMap.get('child4DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
             }
-
+            
             if (paramMap.get('child5Flag') == 'true')
             {
-              getChildItems(itemList, recordId, i, paramMap.get('child5Icon'), paramMap.get('child5Object'), paramMap.get('child5ParentField'), 
-                            paramMap.get('child5LabelField'), paramMap.get('child5DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
+                getChildItems(itemList, recordId, i, paramMap.get('child5Icon'), paramMap.get('child5Object'), paramMap.get('child5ParentField'), 
+                              paramMap.get('child5LabelField'), paramMap.get('child5DateField'), itemType, networkPrefix, sldsResourceURL, truncSize);
             }
             
             String dataJSON = JSON.serialize(itemList, true).replaceAll('startDttm', 'start').replaceAll('endDttm', 'end');
@@ -262,7 +299,7 @@ public class PSTimelineController {
     }
     
     private static void getChildItems(List<PSTimelineItem> itemList, String recordId, Integer i, String icon, String objectName, String parentField, String labelField, 
-                                                String dateField, String itemType, String networkPrefix, String sldsResourceURL, Integer truncSize)
+                                      String dateField, String itemType, String networkPrefix, String sldsResourceURL, Integer truncSize)
     {
         String queryStr = 'SELECT Id, ' + labelField + ', ' + dateField + ' FROM ' + objectName + ' WHERE ' + parentField + ' = \'' + recordId + '\'';
         System.debug('queryStr=' + queryStr);
@@ -321,7 +358,7 @@ public class PSTimelineController {
                 
                 if (networkPrefix != null && networkPrefix.length() > 0)
                 {
-                  sldsResourceURL = networkPrefix + sldsResourceURL;
+                    sldsResourceURL = networkPrefix + sldsResourceURL;
                 }
                 
                 iconHTML = '<span class="slds-icon_container slds-icon-' + category + '-' + name + '" >'
