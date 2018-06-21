@@ -3,6 +3,13 @@ Timeline component based on [VisJS Timeline](http://visjs.org/docs/timeline/#Ove
 
 ![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimeline.gif "Sample Image")
 
+Some options of the component:
+  * Drag left and right on the timeline to slide to different dates
+  * Scroll up/down on mouse to zoom in/out of timeline window
+  * Click the icon in upper-right to recenter timeline back on current day
+  * Double click on item to load the associated record
+  
+  
 This Lightning component is very configurable with following options:
 
    - <b>Navigate to new window</b> - navigate to new window on item double-click or stay in current window
