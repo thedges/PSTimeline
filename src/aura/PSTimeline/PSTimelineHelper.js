@@ -114,6 +114,8 @@
                 var timeline = component.get('v.timeline');
                 timeline.setItems(new vis.DataSet(itemData));
                 
+                self.showControlIcons(component);
+                
             } else {
                 console.log('3');
                 self.hideSpinner(component);
@@ -230,5 +232,12 @@
             this.getData(component);
         });
         $A.enqueueAction(action);
+    },
+    showControlIcons: function(component) {
+      var target = component.find("resetDiv");
+      $A.util.removeClass(target, 'hide');
+        
+      var target = component.find("fitDiv");
+      $A.util.removeClass(target, 'hide');
     }
 })

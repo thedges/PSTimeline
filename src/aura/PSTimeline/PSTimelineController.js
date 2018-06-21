@@ -69,5 +69,26 @@
     resetTimeline : function (component, event, helper) {
         var timeline = component.get("v.timeline");
         timeline.moveTo(new Date());
+    },
+    fitTimeline : function (component, event, helper) {
+        
+        var timeline = component.get("v.timeline");
+        var range = timeline.getItemRange();
+        var today = new Date();
+        
+        var min = range.min;
+        var max = range.max;
+        
+        if (today < range.min)
+        {
+            min = today;
+        }
+        
+        if (today > range.max)
+        {
+            max = today;
+        }
+        
+        timeline.setWindow(min.setDate(min.getDate() - 2), max.setDate(max.getDate() + 2));
     }
 })

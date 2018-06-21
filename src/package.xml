@@ -11,6 +11,7 @@
     </types>
     <types>
         <members>PSTimelineCenter</members>
+        <members>PSTimelineFit</members>
         <members>SLDS261</members>
         <members>VisJS_v4_21_0</members>
         <name>StaticResource</name>
