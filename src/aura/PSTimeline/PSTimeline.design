@@ -1,0 +1,62 @@
+<design:component>
+    <design:attribute name="navToNewWindow" label="Navigate to new window on double-click" Description="Navigate to new window on double-click" datasource="true,false" />
+    <design:attribute name="itemType" label="Item type to show in timeline" Description="Item type to show in timeline" datasource="box,point" />
+    <design:attribute name="sldsIconResource" label="Static resource reference for SDLS icons" Description="Static resource reference for SDLS icons" />
+    
+    <design:attribute name="minHeight" label="Minimum height of component" Description="Minimum height of component" />
+    <design:attribute name="maxHeight" label="Maximum height of component" Description="Maximum height of component" />
+    <design:attribute name="daysBefore" label="Days before current date for initial timeline" Description="Days before current date for initial timeline" />
+    <design:attribute name="daysAfter" label="Days after current date for initial timeline" Description="Days after current date for initial timeline" />
+    <design:attribute name="tooltips" label="Show hover tooltip on truncated items" Description="Show hover tooltips on truncated items" datasource="true,false" />
+
+    <design:attribute name="activityFlag" label="Show activity (task, event, email, call)" Description="Show activity (task, event, email, call)" datasource="true,false"/>
+    <design:attribute name="taskIcon" label="Icon reference for tasks" Description="Icon reference for tasks" />
+    <design:attribute name="eventIcon" label="Icon reference for events" Description="Icon reference for events" />
+    <design:attribute name="emailIcon" label="Icon reference for emails" Description="Icon reference for emails" />
+    <design:attribute name="callIcon" label="Icon reference for calls" Description="Icon reference for calls" />
+
+    <design:attribute name="chatterFlag" label="Show chatter text posts" Description="Show chatter text posts" datasource="true,false"/>
+    <design:attribute name="chatterIcon" label="Icon reference for chatter text posts" Description="Icon reference for chatter text posts" />
+
+    <design:attribute name="contentFlag" label="Show content/file activity" Description="Show content/file activity" datasource="true,false"/>
+    <design:attribute name="contentIcon" label="Icon reference for content/files" Description="Icon reference for content/files" />
+
+    <design:attribute name="caseCommentFlag" label="Show case comments" Description="Show case comments" datasource="true,false"/>
+    <design:attribute name="caseCommentIcon" label="Icon reference for case comments" Description="Icon reference for case comments" />
+
+    <design:attribute name="child1Flag" label="1. Show child record activity" Description="1. Show child record 1 activity" datasource="true,false"/>
+    <design:attribute name="child1Icon" label="1. Icon reference for child" Description="1. Icon reference for child" />
+    <design:attribute name="child1Object" label="1. API name of child object" Description="1. API name of child object 1" />
+    <design:attribute name="child1ParentField" label="1. API field name that points to parent record" Description="1. API field name that points to parent record" />
+    <design:attribute name="child1LabelField" label="1. API field name to show as timeline label" Description="1. API field name to show as timeline label" />
+    <design:attribute name="child1DateField" label="1. API field name for date/time" Description="1. API field name for date/time" />
+
+    <design:attribute name="child2Flag" label="2. Show child record activity" Description="2. Show child record activity" datasource="true,false"/>
+    <design:attribute name="child2Icon" label="2. Icon reference for child" Description="2. Icon reference for child" />
+    <design:attribute name="child2Object" label="2. API name of child object" Description="2. API name of child object" />
+    <design:attribute name="child2ParentField" label="2. API field name that points to parent record" Description="2. API field name that points to parent record" />
+    <design:attribute name="child2LabelField" label="2. API field name to show as timeline label" Description="2. API field name to show as timeline label" />
+    <design:attribute name="child2DateField" label="2. API field name for date/time" Description="2. API field name for date/time" />
+
+    <design:attribute name="child3Flag" label="3. Show child record activity" Description="3. Show child record activity" datasource="true,false"/>
+    <design:attribute name="child3Icon" label="3. Icon reference for child" Description="3. Icon reference for child" />
+    <design:attribute name="child3Object" label="3. API name of child object" Description="3. API name of child object" />
+    <design:attribute name="child3ParentField" label="3. API field name that points to parent record" Description="3. API field name that points to parent record" />
+    <design:attribute name="child3LabelField" label="3. API field name to show as timeline label" Description="3. API field name to show as timeline label" />
+    <design:attribute name="child3DateField" label="3. API field name for date/time" Description="3. API field name for date/time" />
+
+    <design:attribute name="child4Flag" label="4. Show child record activity" Description="4. Show child record activity" datasource="true,false"/>
+    <design:attribute name="child4Icon" label="4. Icon reference for child" Description="4. Icon reference for child" />
+    <design:attribute name="child4Object" label="4. API name of child object" Description="4. API name of child object" />
+    <design:attribute name="child4ParentField" label="4. API field name that points to parent record" Description="4. API field name that points to parent record" />
+    <design:attribute name="child4LabelField" label="4. API field name to show as timeline label" Description="4. API field name to show as timeline label" />
+    <design:attribute name="child4DateField" label="4. API field name for date/time" Description="4. API field name for date/time" />
+
+    <design:attribute name="child5Flag" label="5. Show child record activity" Description="5. Show child record activity" datasource="true,false"/>
+    <design:attribute name="child5Icon" label="5. Icon reference for child" Description="5. Icon reference for child" />
+    <design:attribute name="child5Object" label="5. API name of child object" Description="5. API name of child object" />
+    <design:attribute name="child5ParentField" label="5. API field name that points to parent record" Description="5. API field name that points to parent record" />
+    <design:attribute name="child5LabelField" label="5. API field name to show as timeline label" Description="5. API field name to show as timeline label" />
+    <design:attribute name="child5DateField" label="5. API field name for date/time" Description="5. API field name for date/time" />
+
+</design:component>

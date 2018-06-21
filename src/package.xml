@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>PSTimelineController</members>
+        <members>PSTimelineItem</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>PSTimeline</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>PSTimelineCenter</members>
+        <members>SLDS261</members>
+        <members>VisJS_v4_21_0</members>
+        <name>StaticResource</name>
+    </types>
+    <version>42.0</version>
+</Package>

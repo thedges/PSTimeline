@@ -1,0 +1,23 @@
+.THIS .item_labelXX {
+    display:inline-block;
+    width:150px;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
+
+.THIS #timelineContainer {
+	position: relative;
+}
+
+.THIS #resetDiv {
+	position: absolute; top: 0px; right: 0px; z-index: 999; padding: 3px; 
+}
+
+.THIS .Complete {
+	background-color: #99d199;
+}
+
+.THIS .Overdue {
+	background-color: #d39698;
+}
