@@ -1,4 +1,47 @@
 # PSTimeline
-Timeline component to show record activity such as chatter posts, document uploads, tasks, events, case comments, child objects
+Timeline component to show record activity such as chatter posts, document uploads, tasks, events, case comments, records on child objects. Basically a component to help show all the activity that occurred for a record. Use cases could be around health care, social services, case history, etc... 
 
 ![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimeline.gif "Sample Image")
+
+This Lightning component is based on the [VisJS Timeline](http://visjs.org/docs/timeline/#Overview) and is very configurable with following options:
+
+   - <b>Navigate to new window</b> - navigate to new window on item double-click or stay in current window
+   - <b>Item Type</b> - item type to show in timeline (box or range)
+   - <b>SLDS Icon Static Resource Reference</b> - reference to static resource file that stores the SLDS icons (default is "/resource/SLDS261")
+   - <b>Minimum Height</b> - the minimum height of component; leave blank to not set limit
+   - <b>Maximum Height</b> - the maximum height of component; leave blank to not set limit
+   - <b>Days Before</b> - the number of days in past to show on initial timeline
+   - <b>Days After</b> - the number of days in future to show on initial timeline
+   - <b>Truncation Size</b> - the max size of any label strings before truncation occurs
+   - <b>Show Tooltips</b> - boolean to determine if tooltips will show when you hover over an item 
+
+   - <b>Show Activities</b> - boolean to show activities (tasks, events, emails, calls)
+   - <b>Task Icon</b> - the icon to show for tasks
+   - <b>Event Icon</b> - the icon to show for events
+   - <b>Email Icon</b> - the icon to show for email 
+   - <b>Call Icon</b> - the icon to show for calls
+
+   - <b>Show Chatter Posts</b> - boolean to show chatter text posts
+   - <b>Chatter Icon</b> - the icon to show for chatter text posts
+
+   - <b>Show Content Uploads (files)</b> - boolean to show content uploads (i.e. Chatter files) 
+   - <b>Content Icon</b> - the icon to show for content
+
+   - <b>Show Case Comments</b> - boolean to show case comments
+   - <b>Case Comment Icon</b> - the icon to show for case comments
+
+The component supports ability to child records for up to 5 related child objects. Configuration options are:
+
+   - <b>Show Child Records</b> - boolean to show this child records
+   - <b>Child Icon</b> - the icon to show for this child
+   - <b>Child Object</b> - the sObject API name for this child 
+   - <b>Child Parent Field</b> - the sObject Field API name that contains the lookup/master-detail to the parent record 
+   - <b>Child Label Field</b> - the sObject Field API name that contains the label to show in the timeline item 
+   - <b>Child Date Field</b> - the sObject Field API name that contains the date or date/time field to plot on timeline  
+
+
+
+<a href="https://githubsfdeploy.herokuapp.com">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
