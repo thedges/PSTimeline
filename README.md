@@ -1,5 +1,5 @@
 # PSTimeline
-Timeline component based on [VisJS Timeline](http://visjs.org/docs/timeline/#Overview) to show record activity such as chatter posts, document uploads, tasks, events, case comments, records on child objects. Basically a component to help show all the activity that occurred for a record. Use cases could be around health care, social services, case history, etc... 
+Timeline component based on [VisJS Timeline](http://visjs.org/docs/timeline/#Overview) to show record activity such as chatter posts, document uploads, tasks, events, case comments, and records on child objects. Basically a component to help show all the activity that occurred for a record. Use cases could be around health care, social services, case history, etc... 
 
 ![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimeline.gif "Sample Image")
 
