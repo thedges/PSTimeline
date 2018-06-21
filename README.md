@@ -1,9 +1,9 @@
 # PSTimeline
-Timeline component to show record activity such as chatter posts, document uploads, tasks, events, case comments, records on child objects. Basically a component to help show all the activity that occurred for a record. Use cases could be around health care, social services, case history, etc... 
+Timeline component based on [VisJS Timeline](http://visjs.org/docs/timeline/#Overview) to show record activity such as chatter posts, document uploads, tasks, events, case comments, records on child objects. Basically a component to help show all the activity that occurred for a record. Use cases could be around health care, social services, case history, etc... 
 
 ![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimeline.gif "Sample Image")
 
-This Lightning component is based on the [VisJS Timeline](http://visjs.org/docs/timeline/#Overview) and is very configurable with following options:
+This Lightning component is very configurable with following options:
 
    - <b>Navigate to new window</b> - navigate to new window on item double-click or stay in current window
    - <b>Item Type</b> - item type to show in timeline (box or range)
