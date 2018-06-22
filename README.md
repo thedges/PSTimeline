@@ -8,9 +8,9 @@ Timeline component based on [VisJS Timeline](http://visjs.org/docs/timeline/#Ove
   * Scroll up/down on mouse to zoom in/out of timeline window
   * Double click on item to load the associated record
   * Control icon in top-right of component:
-    -  ![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimelineCenter.png "Sample Image") Click to recenter timeline on current day/time
-    -  Click to fit all items within the timeline
-    -  Click to perform a full data refresh and plot on timeline
+    -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineCenter.png" height="20" width="20"/> Click to recenter timeline on current day/time
+    -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineFit.png" height="15" width="20"/> Click to fit all items within the timeline
+    -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineRefresh.png" height="20" width="20"/> Click to perform a full data refresh and plot on timeline
   
   
 <b>This Lightning component is very configurable with following options:</b>
