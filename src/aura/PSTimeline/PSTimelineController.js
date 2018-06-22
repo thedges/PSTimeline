@@ -67,7 +67,7 @@
     destroyCmp : function (component, event, helper) {
         component.destroy();
     },
-    resetTimeline : function (component, event, helper) {
+    centerTimeline : function (component, event, helper) {
         var timeline = component.get("v.timeline");
         timeline.moveTo(new Date());
     },
@@ -91,5 +91,11 @@
         }
         
         timeline.setWindow(min.setDate(min.getDate() - 2), max.setDate(max.getDate() + 2));
+    },
+    resetTimeline : function (component, event, helper) {
+        
+        var timeline = component.get("v.timeline");
+        timeline.setItems(new vis.DataSet(null));
+        helper.getData(component);
     }
 })

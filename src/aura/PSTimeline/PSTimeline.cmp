@@ -25,7 +25,7 @@
     
     <aura:attribute name="contentFlag" type="String" default="true"/>
     <aura:attribute name="contentIcon" type="String" default="standard:file"/>
-
+    
     <aura:attribute name="caseCommentFlag" type="String" default="false"/>
     <aura:attribute name="caseCommentIcon" type="String" default="custom:custom19"/>
     
@@ -35,7 +35,7 @@
     <aura:attribute name="child1ParentField" type="String"/>
     <aura:attribute name="child1LabelField" type="String"/>
     <aura:attribute name="child1DateField" type="String"/>
-
+    
     <aura:attribute name="child2Flag" type="String" default="false"/>
     <aura:attribute name="child2Icon" type="String" default="standard:default"/>
     <aura:attribute name="child2Object" type="String"/>
@@ -78,7 +78,16 @@
             <lightning:spinner variant="brand"  size="large" />
         </aura:if>
         <div id="{!globalId + '_timeline'}"></div>
-        <div aura:id="resetDiv" id="resetDiv" class="hide"><img src="{!$Resource.PSTimelineCenter}" height="20" width="20" onclick="{!c.resetTimeline}" /></div>
-        <div aura:id="fitDiv" id="fitDiv" class="hide"><img src="{!$Resource.PSTimelineFit}" height="20" width="20" onclick="{!c.fitTimeline}" /></div>
+        <div aura:id="controlDiv" id="controlDiv" class="hide">
+            <div>
+                <img src="{!$Resource.PSTimelineCenter}" height="20" width="20" onclick="{!c.centerTimeline}" />
+            </div>
+            <div class="slds-p-top_xx-small">
+                <img src="{!$Resource.PSTimelineFit}" height="20" width="20" onclick="{!c.fitTimeline}" />
+            </div>
+            <div class="slds-p-top_xx-small">
+                <img src="{!$Resource.PSTimelineRefresh}" height="20" width="20" onclick="{!c.resetTimeline}" />
+            </div>
+        </div>
     </div>
 </aura:component>

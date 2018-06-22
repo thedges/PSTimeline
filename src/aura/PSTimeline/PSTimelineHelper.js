@@ -109,7 +109,8 @@
                 
                 var timeline = component.get('v.timeline');
                 timeline.setItems(new vis.DataSet(itemData));
-                //self.hideSpinner(component);
+                timeline.fit();
+                self.hideSpinner(component);
                 
                 self.showControlIcons(component);
                 
@@ -231,7 +232,7 @@
         $A.enqueueAction(action);
     },
     showControlIcons: function(component) {
-      var target = component.find("resetDiv");
+      var target = component.find("controlDiv");
       $A.util.removeClass(target, 'hide');
         
       var target = component.find("fitDiv");

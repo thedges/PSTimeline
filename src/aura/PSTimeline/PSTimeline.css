@@ -10,14 +10,9 @@
 	position: relative;
 }
 
-.THIS #resetDiv {
+.THIS #controlDiv {
 	position: absolute; top: 0px; right: 0px; z-index: 5; padding: 3px; 
 }
-
-.THIS #fitDiv {
-	position: absolute; top: -2px; left: 0px; z-index: 5; padding: 5px; 
-}
-
 
 .THIS .Complete {
 	background-color: #99d199;
