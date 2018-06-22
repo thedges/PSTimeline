@@ -105,14 +105,11 @@
             var resp = JSON.parse(actionResult.getReturnValue());
             
             if (resp.status == 'SUCCESS') {
-                console.log('2');
-                self.hideSpinner(component);
-                console.log('resp.data=' + resp.data);
                 var itemData = JSON.parse(resp.data);
-                console.log('itemData=' + itemData);
                 
                 var timeline = component.get('v.timeline');
                 timeline.setItems(new vis.DataSet(itemData));
+                //self.hideSpinner(component);
                 
                 self.showControlIcons(component);
                 
@@ -239,5 +236,9 @@
         
       var target = component.find("fitDiv");
       $A.util.removeClass(target, 'hide');
+    },
+    initComplete: function(component) {
+        console.log('initComplete...');
+        this.hideSpinner(component);
     }
 })

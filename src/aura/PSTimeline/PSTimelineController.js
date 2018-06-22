@@ -23,7 +23,8 @@
                        clickToUse: false,
                        margin: {
                            item: 20
-                       }};
+                       },
+                       onInitialDrawComplete: function(){helper.initComplete(component)}};
         
         var today = new Date();
         var showTooltips = component.get('v.tooltips');
