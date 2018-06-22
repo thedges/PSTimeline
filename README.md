@@ -9,7 +9,7 @@ Timeline component based on [VisJS Timeline](http://visjs.org/docs/timeline/#Ove
   * Double click on item to load the associated record
   * Control icon in top-right of component:
     -  ![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimelineCenter.png "Sample Image") Click to recenter timeline on current day/time
-    -  Click to fit all items within the timeline
+    -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineCenter.png" />Click to fit all items within the timeline
     -  Click to perform a full data refresh and plot on timeline
   
   
