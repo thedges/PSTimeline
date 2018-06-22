@@ -6,9 +6,11 @@ Timeline component based on [VisJS Timeline](http://visjs.org/docs/timeline/#Ove
 <b>Some options of the component:</b>
   * Drag left and right on the timeline to slide to different dates
   * Scroll up/down on mouse to zoom in/out of timeline window
-  * Click the icon in upper-right to recenter timeline back on current day
-  * Click the icon in upper-left to fit all items within the timeline
   * Double click on item to load the associated record
+  * Control icon in top-right of component:
+    -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineCenter.png" />Click to recenter timeline on current day/time
+    -  Click to fit all items within the timeline
+    -  Click to perform a full data refresh and plot on timeline
   
   
 <b>This Lightning component is very configurable with following options:</b>
