@@ -1,0 +1,84 @@
+<aura:component controller="PSTimelineController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes" access="global" >
+    <ltng:require styles="{!$Resource.VisJS_v4_21_0 + '/vis-4.21.0/dist/vis.min.css'}" scripts="{!$Resource.VisJS_v4_21_0 + '/vis-4.21.0/dist/vis.min.js'}" afterScriptsLoaded="{!c.jsLoaded}"/>
+    
+    <!-- ************************ -->
+    <!-- configuration attributes -->
+    <!-- ************************ -->
+    <aura:attribute name="navToNewWindow" type="String" default="false"/>
+    <aura:attribute name="itemType" type="String" default="box"/>
+    <aura:attribute name="sldsIconResource" type="String" default="/resource/SLDS261"/>
+    <aura:attribute name="minHeight" type="String" default="200px"/>
+    <aura:attribute name="maxHeight" type="String"/>
+    <aura:attribute name="daysBefore" type="Integer"/>
+    <aura:attribute name="daysAfter" type="Integer"/>
+    <aura:attribute name="truncSize" type="Integer" default="50"/>
+    <aura:attribute name="tooltips" type="String" default="false"/>
+    <aura:attribute name="showFilter" type="String" default="false"/>
+
+    <aura:attribute name="objectName" type="String"/>
+    <aura:attribute name="objectSearchFields" type="String" default=""/>
+    <aura:attribute name="objectSearchCondition" type="String" default="AND"/>
+    <aura:attribute name="objectIcon" type="String" default="standard:default"/>
+    <aura:attribute name="objectLabelField" type="String"/>
+    <aura:attribute name="objectDescField" type="String"/>
+    <aura:attribute name="objectDateField" type="String"/>
+    <aura:attribute name="objectColorField" type="String"/>
+    <aura:attribute name="objectIconField" type="String"/>
+    <aura:attribute name="objectEarliestDate" type="String"/>
+    
+    <aura:attribute name="buttonLabel" type="String" default="Filter"/>
+    <aura:attribute name="processorName" type="String" default="PSTimelineRecordProcessor"/>
+    <aura:attribute name="processorOptions" type="Object"/>
+    
+    <!-- ******************* -->
+    <!-- internal attributes --> 
+    <!-- ******************* -->
+    <aura:attribute name="timeline" type="Object" />
+    <aura:attribute name="selectFields" type="String" />
+    <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="context" type="Object" />
+    <aura:attribute name="recs" type="List" />
+    <aura:attribute name="dateSel" type="Date" />
+    
+    <aura:handler name="filterEvent" event="c:PSObjectSoqlFilterEvent" action="{!c.handleFilterEvent}"/>
+    <aura:handler name="change" value="{!v.recs}" action="{!c.itemsChange}"/>
+    <aura:handler name="change" value="{!v.dateSel}" action="{!c.onDateSel}"/>
+    
+    <!-- <div class="container" style="background-color: #ffffff; border-radius: 7px;"> -->
+    
+    <div class="slds-card">
+        <aura:if isTrue="{!v.IsSpinner}">
+            <lightning:spinner variant="brand" size="large" alternativeText="Retrieving data" />
+        </aura:if>
+        <div aura:id="filterDiv" id="filterDiv" class="hide slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
+              <c:PSObjectSoqlFilter aura:id="filterComp" recList="{!v.recs}" title="Search" objectName="{!v.objectName}" buttonLabel="{!v.buttonLabel}" 
+                                    filterFields="{!v.objectSearchFields}" filterCondition="{!v.objectSearchCondition}" selectFields="{!v.selectFields}" 
+                                    processorName="{!v.processorName}" processorOptions="{!v.processorOptions}" 
+                                    dateField="{!v.objectDateField}" earliestDate="{!v.objectEarliestDate}"/>
+        </div>
+
+        <div aura:id="timelineContainerObject" id="timelineContainerObject">
+        <div id="{!globalId + '_timeline_generic'}"></div>
+        <div aura:id="controlDiv" id="controlDiv" class="hide" >
+            <div class="imageDiv">
+                <img src="{!$Resource.PSTimelineCenter}" height="22" width="22" onclick="{!c.centerTimeline}" />
+            </div>
+            <div class="slds-p-top_xx-small imageDiv">
+                <img src="{!$Resource.PSTimelineCalendar}" height="18" width="18" onclick="{!c.toggleDateSel}" />
+            </div>
+            <div class="slds-p-top_xx-small imageDiv">
+                <img src="{!$Resource.PSTimelineFit}" height="20" width="20" onclick="{!c.fitTimeline}" />
+            </div>
+            <div class="slds-p-top_xx-small imageDiv">
+                <img src="{!$Resource.PSTimelineRefresh}" height="20" width="20" onclick="{!c.resetTimeline}" />
+            </div>
+            <div class="slds-p-top_xx-small imageDiv">
+                <img src="{!$Resource.PSTimelineFilter}" height="20" width="20" onclick="{!c.toggleFilter}" />
+            </div>
+        </div>
+        <div aura:id="dateSelDiv" id="dateSelDiv" class="hide slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
+            <lightning:input type="date" label="Move to day:" name="date" value="{!v.dateSel}" /> 
+        </div>
+    </div>
+    </div>
+</aura:component>

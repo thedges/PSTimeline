@@ -51,7 +51,9 @@
             map['child1Object'] = component.get('v.child1Object');
             map['child1ParentField'] = component.get('v.child1ParentField');
             map['child1LabelField'] = component.get('v.child1LabelField');
+            map['child1DescField'] = component.get('v.child1DescField');
             map['child1DateField'] = component.get('v.child1DateField');
+            map['child1ColorField'] = component.get('v.child1ColorField');
         }
         
         if (component.get('v.child2Flag') == 'true')
@@ -61,7 +63,9 @@
             map['child2Object'] = component.get('v.child2Object');
             map['child2ParentField'] = component.get('v.child2ParentField');
             map['child2LabelField'] = component.get('v.child2LabelField');
+            map['child2DescField'] = component.get('v.child2DescField');
             map['child2DateField'] = component.get('v.child2DateField');
+            map['child2ColorField'] = component.get('v.child2ColorField');
         }
         
         if (component.get('v.child3Flag') == 'true')
@@ -71,7 +75,9 @@
             map['child3Object'] = component.get('v.child3Object');
             map['child3ParentField'] = component.get('v.child3ParentField');
             map['child3LabelField'] = component.get('v.child3LabelField');
-            map['child3DateField'] = component.get('v.child3DateField');   
+            map['child3DescField'] = component.get('v.child3DescField');
+            map['child3DateField'] = component.get('v.child3DateField');  
+            map['child3ColorField'] = component.get('v.child3ColorField');
         }
         
         if (component.get('v.child4Flag') == 'true')
@@ -81,7 +87,9 @@
             map['child4Object'] = component.get('v.child4Object');
             map['child4ParentField'] = component.get('v.child4ParentField');
             map['child4LabelField'] = component.get('v.child4LabelField');
+            map['child4DescField'] = component.get('v.child4DescField');
             map['child4DateField'] = component.get('v.child4DateField');
+            map['child4ColorField'] = component.get('v.child4ColorField');
         }
         
         if (component.get('v.child5Flag') == 'true')
@@ -91,7 +99,9 @@
             map['child5Object'] = component.get('v.child5Object');
             map['child5ParentField'] = component.get('v.child5ParentField');
             map['child5LabelField'] = component.get('v.child5LabelField');
+            map['child5DescField'] = component.get('v.child5DescField');
             map['child5DateField'] = component.get('v.child5DateField');
+            map['child5ColorField'] = component.get('v.child5ColorField');
         }
         
         // save the case
@@ -241,5 +251,9 @@
     initComplete: function(component) {
         console.log('initComplete...');
         this.hideSpinner(component);
+    },
+    hideDateSel : function (component) {
+        var target = component.find("dateSelDiv");
+        $A.util.addClass(target, 'hide');
     }
 })

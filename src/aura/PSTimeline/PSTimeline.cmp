@@ -34,35 +34,45 @@
     <aura:attribute name="child1Object" type="String"/>
     <aura:attribute name="child1ParentField" type="String"/>
     <aura:attribute name="child1LabelField" type="String"/>
+    <aura:attribute name="child1DescField" type="String"/>
     <aura:attribute name="child1DateField" type="String"/>
+    <aura:attribute name="child1ColorField" type="String"/>
     
     <aura:attribute name="child2Flag" type="String" default="false"/>
     <aura:attribute name="child2Icon" type="String" default="standard:default"/>
     <aura:attribute name="child2Object" type="String"/>
     <aura:attribute name="child2ParentField" type="String"/>
     <aura:attribute name="child2LabelField" type="String"/>
+    <aura:attribute name="child2DescField" type="String"/>
     <aura:attribute name="child2DateField" type="String"/>
+    <aura:attribute name="child2ColorField" type="String"/>
     
     <aura:attribute name="child3Flag" type="String" default="false"/>
     <aura:attribute name="child3Icon" type="String" default="standard:default"/>
     <aura:attribute name="child3Object" type="String"/>
     <aura:attribute name="child3ParentField" type="String"/>
     <aura:attribute name="child3LabelField" type="String"/>
+    <aura:attribute name="child3DescField" type="String"/>
     <aura:attribute name="child3DateField" type="String"/>    
+    <aura:attribute name="child3ColorField" type="String"/>
     
     <aura:attribute name="child4Flag" type="String" default="false"/>
     <aura:attribute name="child4Icon" type="String" default="standard:default"/>
     <aura:attribute name="child4Object" type="String"/>
     <aura:attribute name="child4ParentField" type="String"/>
     <aura:attribute name="child4LabelField" type="String"/>
+    <aura:attribute name="child4DescField" type="String"/>
     <aura:attribute name="child4DateField" type="String"/>
+    <aura:attribute name="child4ColorField" type="String"/>
     
     <aura:attribute name="child5Flag" type="String" default="false"/>
     <aura:attribute name="child5Icon" type="String" default="standard:default"/>
     <aura:attribute name="child5Object" type="String"/>
     <aura:attribute name="child5ParentField" type="String"/>
     <aura:attribute name="child5LabelField" type="String"/>
+    <aura:attribute name="child5DescField" type="String"/>
     <aura:attribute name="child5DateField" type="String"/>
+    <aura:attribute name="child5ColorField" type="String"/>
     
     <!-- ******************* -->
     <!-- internal attributes --> 
@@ -70,6 +80,8 @@
     <aura:attribute name="timeline" type="Object" />
     <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
     <aura:attribute name="context" type="Object" />
+    <aura:attribute name="dateSel" type="Date" />
+    <aura:handler name="change" value="{!v.dateSel}" action="{!c.onDateSel}"/>
     
     <!-- <div class="container" style="background-color: #ffffff; border-radius: 7px;"> -->
     
@@ -79,15 +91,21 @@
         </aura:if>
         <div id="{!globalId + '_timeline'}"></div>
         <div aura:id="controlDiv" id="controlDiv" class="hide">
-            <div>
+            <div class="imageDiv">
                 <img src="{!$Resource.PSTimelineCenter}" height="20" width="20" onclick="{!c.centerTimeline}" />
             </div>
-            <div class="slds-p-top_xx-small">
+            <div class="slds-p-top_xx-small imageDiv">
+                <img src="{!$Resource.PSTimelineCalendar}" height="18" width="18" onclick="{!c.toggleDateSel}" />
+            </div>
+            <div class="slds-p-top_xx-small imageDiv">
                 <img src="{!$Resource.PSTimelineFit}" height="20" width="20" onclick="{!c.fitTimeline}" />
             </div>
-            <div class="slds-p-top_xx-small">
+            <div class="slds-p-top_xx-small imageDiv">
                 <img src="{!$Resource.PSTimelineRefresh}" height="20" width="20" onclick="{!c.resetTimeline}" />
             </div>
+        </div>
+        <div aura:id="dateSelDiv" id="dateSelDiv" class="hide slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
+            <lightning:input type="date" label="Move to day:" name="date" value="{!v.dateSel}" /> 
         </div>
     </div>
 </aura:component>

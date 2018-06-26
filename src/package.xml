@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>PSObjectSoqlFilterController</members>
+        <members>PSRecordProcessorIF</members>
         <members>PSTimelineController</members>
         <members>PSTimelineItem</members>
+        <members>PSTimelineRecordProcessor</members>
         <name>ApexClass</name>
     </types>
     <types>
+        <members>PSObjectSoqlFilter</members>
+        <members>PSObjectSoqlFilterEvent</members>
+        <members>PSObjectTimeline</members>
         <members>PSTimeline</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
+        <members>PSTimelineCalendar</members>
         <members>PSTimelineCenter</members>
+        <members>PSTimelineFilter</members>
         <members>PSTimelineFit</members>
         <members>PSTimelineRefresh</members>
         <members>SLDS261</members>

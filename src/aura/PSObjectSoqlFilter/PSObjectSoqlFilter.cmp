@@ -1,0 +1,50 @@
+<aura:component controller="PSObjectSoqlFilterController" >
+    <aura:attribute name="title" type="String"/>
+    <aura:attribute name="buttonLabel" type="String"/>
+	<aura:attribute name="objectName" type="String"/>
+	<aura:attribute name="selectFields" type="String"/>
+    <aura:attribute name="filterFields" type="String"/>
+    <aura:attribute name="filterCondition" type="String"/>
+    <aura:attribute name="dateField" type="String"/>
+    <aura:attribute name="earliestDate" type="String"/>
+    
+    <aura:attribute name="processorName" type="String"/>
+    <aura:attribute name="processorOptions" type="Object"/>
+    
+    <aura:attribute name="recList" type="List" />
+    <aura:attribute name="filterFieldComps" type="List" />
+    <aura:attribute name="tableFieldComps" type="List" />
+    
+    <aura:method name="executeFilter" action="{!c.onFilter}"/> 
+    <aura:registerEvent name="filterEvent" type="c:PSObjectSoqlFilterEvent" />
+    
+    <!-- Event Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="container">
+        <aura:if isTrue="{!v.errorMsg.length > 0}">
+            <ui:message title="Error" severity="error" closable="true">
+                {!v.errorMsg}
+            </ui:message>
+        </aura:if>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <div class="slds-p-horizontal--small slds-size--1-of-1">
+                <fieldset class="slds-box slds-theme--default">
+                    <aura:renderIf isTrue="{!v.title.length > 0}">
+                        <legend class="slds-text-heading--medium "><span style="font-weight:bold">{!v.title}</span></legend>
+                    </aura:renderIf>
+                    <form class="slds-form--inline" id="filterForm">
+                        <aura:renderIf isTrue="{!v.filterFieldComps.length > 0}">
+                            <aura:iteration items="{!v.filterFieldComps}" var="filterComp" indexVar="i">
+                                <c:PSInputField fld="{!filterComp}" />
+                            </aura:iteration>
+                        </aura:renderIf>
+                        <div class="slds-form-element slds-p-bottom_xx-small">
+                             <lightning:button variant="brand" label="{!v.buttonLabel}" title="{!v.buttonLabel}" onclick="{!c.onFilter}"/>
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</aura:component>

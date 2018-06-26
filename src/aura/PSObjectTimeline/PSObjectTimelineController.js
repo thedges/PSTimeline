@@ -1,20 +1,18 @@
 ({
-    jsLoaded : function(component, event, helper) {
+	jsLoaded : function(component, event, helper) {
         var globalId = component.getGlobalId();
         
-        // DOM element where the Timeline will be attached
-        var container = document.getElementById(globalId + '_timeline');
+        // build select field list
+        var tmpStr;
+        tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectLabelField'));
+        tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectDescField'));
+        tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectDateField'));
+        tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectColorField'));
+        tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectIconField'));
+        component.set('v.selectFields', tmpStr);
         
-        /*
-        var items = new vis.DataSet([
-            {id: 1, content: '<img src="/resource/WazeIcons/police.png"/><a href="http://www.google.com">Chatter post</a>', start: '2013-04-20', type: 'point', className: 'red'},
-            {id: 2, content: 'item 2', start: '2013-04-14', className: 'red'},
-            {id: 3, content: 'item 3', start: '2013-04-18'},
-            {id: 4, content: 'item 4', start: '2013-04-16', end: '2013-04-19'},
-            {id: 5, content: 'item 5', start: '2013-04-25'},
-            {id: 6, content: 'item 6', start: '2013-04-27'}
-        ]);
-        */
+        // DOM element where the Timeline will be attached
+        var container = document.getElementById(globalId + '_timeline_generic');
         
         var items = null;
         
@@ -61,6 +59,13 @@
         
         component.set('v.timeline', timeline);
         
+        var showFilter = component.get('v.showFilter');
+        if (showFilter == 'true')
+        {
+            var target = component.find("filterDiv");
+            $A.util.removeClass(target, 'hide');
+        }
+        
         helper.setRuntimeContext(component);
         
     },
@@ -77,8 +82,20 @@
         var range = timeline.getItemRange();
         var today = new Date();
         
-        var min = range.min;
-        var max = range.max;
+        var min;
+        var max;
+        
+        if (range == null || range.min == null || range.max == null)
+        {
+            min = today;
+            max = today;
+        }
+        else
+        {
+            min = range.min;
+            max = range.max;
+        }
+
         
         if (today < range.min)
         {
@@ -96,7 +113,48 @@
         
         var timeline = component.get("v.timeline");
         timeline.setItems(new vis.DataSet(null));
-        helper.getData(component);
+        //helper.getGenericData(component);
+        helper.filterData(component);
+    },
+    toggleFilter : function (component, event, helper) {
+        var target = component.find("filterDiv");
+        if ($A.util.hasClass(target, 'hide'))
+        {
+           $A.util.removeClass(target, 'hide');
+        }
+        else
+        {
+           $A.util.addClass(target, 'hide');
+        }
+    },
+    handleFilterEvent : function (component, event, helper) {
+        console.log('handleFilterEvent...');
+        var action = event.getParam("action");
+        console.log('  > action=' + action);
+        if (action == 'start')
+        {
+           helper.showSpinner(component);
+        }
+        else
+        {
+           helper.hideSpinner(component); 
+           helper.showControlIcons(component);
+        }
+
+    },
+    itemsChange: function (component, event, helper) {
+        console.log('itemsChange...');
+        var timeline = component.get("v.timeline");
+        
+        var recs = component.get("v.recs");
+        if (recs != null && recs.length > 0)
+        {
+          timeline.setItems(new vis.DataSet(recs));
+        }
+        else
+        {
+          timeline.setItems(null);
+        }
     },
     toggleDateSel : function (component, event, helper) {
         var target = component.find("dateSelDiv");

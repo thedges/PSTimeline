@@ -1,0 +1,24 @@
+<design:component label="PSTimeline (Object)">
+    <design:attribute name="navToNewWindow" label="Navigate to new window on double-click" datasource="true,false" />
+    <design:attribute name="itemType" label="Item type to show in timeline" datasource="box,point" />
+    <design:attribute name="sldsIconResource" label="Static resource reference for SDLS icons" />
+    
+    <design:attribute name="minHeight" label="Minimum height of component" />
+    <design:attribute name="maxHeight" label="Maximum height of component" />
+    <design:attribute name="daysBefore" label="Days before current date for initial timeline" />
+    <design:attribute name="daysAfter" label="Days after current date for initial timeline" />
+    <design:attribute name="tooltips" label="Show hover tooltip on truncated items" datasource="true,false" />
+    <design:attribute name="showFilter" label="Show filter section" datasource="true,false" />
+
+    <design:attribute name="objectName" label="API name of object" />
+    <design:attribute name="objectSearchFields" label="Field API names for filter capability" />
+    <design:attribute name="objectSearchCondition" label="Filter operation (AND or OR)" description="Set where clause join operation for filter fields" datasource="AND,OR" />
+    <design:attribute name="objectIcon" label="Default icon reference for object" />
+    <design:attribute name="objectLabelField" label="API field name to show as timeline label" />
+    <design:attribute name="objectDescField" label="API field name to show as hover details" />
+    <design:attribute name="objectDateField" label="API field name for date/time field" />
+    <design:attribute name="objectIconField" label="API field name for icon override" />
+    <design:attribute name="objectColorField" label="API field name for background color" />
+    <design:attribute name="objectEarliestDate" label="Date in past to limit object search" description="Number of days or date in past to limit object search (positive integer or MM/DD/YYYY)" />
+
+</design:component>

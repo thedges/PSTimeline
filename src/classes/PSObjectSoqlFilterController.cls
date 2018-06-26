@@ -1,0 +1,238 @@
+public class PSObjectSoqlFilterController {
+    @AuraEnabled
+    public static String prepFilterFields(String params) 
+    {
+        System.debug('prepFilterFields invoked...');
+        Map<String, String> paramMap = (Map<String, String>)JSON.deserialize(params,   Map<String, String>.class);
+        System.debug(JSON.serializePretty(paramMap));
+        PSResponse resp = new PSResponse();
+        
+        try
+        {  
+            String objectName = paramMap.get('objectName');
+            String filterFields = paramMap.get('filterFields');
+            resp.data = PSMetaUtils.getMetaFieldDesc3(objectName, filterFields);
+        }
+        catch (exception e)
+        {
+            resp.status = PSResponse.ERROR;
+            resp.msg = e.getMessage();
+        }
+        
+        return  JSON.serialize(resp);
+    }
+    
+    @AuraEnabled
+    public static String queryObjectData(String params)
+    {
+        System.debug('queryObjectData invoked...');
+        Map<String, String> paramMap = (Map<String, String>)JSON.deserialize(params,   Map<String, String>.class);
+        System.debug(JSON.serializePretty(paramMap));
+        PSResponse resp = new PSResponse();
+        
+        try
+        {  
+            Object filterFieldComps = null;
+            if (paramMap.containsKey('filterFieldComps')) filterFieldComps = paramMap.get('filterFieldComps');
+            
+            // setup record processor
+            PSRecordProcessorIF processor = null;
+            if (paramMap.containsKey('processorName'))
+            {
+                Type customType = Type.forName(paramMap.get('processorName'));
+                processor = (PSRecordProcessorIF)customType.newInstance();
+                
+                if (paramMap.containsKey('processorOptions'))
+                {
+                    System.debug('processorOptions=' + paramMap.containsKey('processorOptions'));
+                    Map<String,String> options = (Map<String,String>)JSON.deserialize(paramMap.get('processorOptions'), Map<String,String>.class);
+                    processor.setConfig(options);
+                }
+            }
+            
+            String objectName = paramMap.get('objectName');
+            String selectFields = paramMap.get('selectFields');
+            String filterFields = paramMap.get('filterFields');
+            String filterCondition = paramMap.get('filterCondition');
+            
+            PSSoqlBuilder soqlBldr = new PSSoqlBuilder();
+            soqlBldr.selectx(PSDemoUtils.parseCSVString(selectFields));
+            soqlBldr.fromx(objectName);
+            
+            PSConditionGroup filterClause = null;
+            if (filterFields != null && filterFields.length() > 0)
+            {
+                if (filterCondition == 'OR')
+                {
+                  filterClause = new PSOrCondition();   
+                }
+                else
+                {
+                   filterClause = new PSAndCondition();
+                }
+                
+                List<PSField> filterList = (List<PSField>)JSON.deserialize(filterFields, List<PSField>.class);
+                for (PSField filter : filterList)
+                {
+
+                    System.debug('filterField=' + JSON.serializePretty(filter));
+                    if (filter.value != null && filter.value.length() > 0)
+                    {
+                        filter.value = filter.value.trim(); 
+                        if (filter.ftype == PSField.TYPE_STRING || filter.ftype == PSField.TYPE_EMAIL || filter.ftype == PSField.TYPE_PHONE)
+                        {
+                            if (filter.wildcard)
+                            {
+                                if (filter.value.contains('%') || filter.value.contains('_'))
+                                {
+                                   filterClause.add(new PSFieldCondition(filter.name).likex(filter.value)); 
+                                }
+                                else
+                                {
+                                   filterClause.add(new PSFieldCondition(filter.name).likex('%' + filter.value + '%'));  
+                                }
+                            }
+                            else if (filter.value.contains('%') || filter.value.contains('_'))
+                            {
+                                filterClause.add(new PSFieldCondition(filter.name).likex(filter.value));
+                            }
+                            else
+                            {
+                                filterClause.add(new PSFieldCondition(filter.name).equals(filter.value));  
+                            }
+                        }
+                        else if (filter.ftype == PSField.TYPE_PICKLIST)
+                        {
+                            filterClause.add(new PSFieldCondition(filter.name).equals(filter.value));  
+                        }
+                        else if (filter.ftype == PSField.TYPE_MULTIPICKLIST)
+                        {
+                            if (filter.value.contains(';'))
+                            {
+                               filterClause.add(new PSSetCondition(filter.name).includes(PSDemoUtils.parseDelimitedString(filter.value, ';')));  
+                            }
+                            else
+                            {
+                               filterClause.add(new PSFieldCondition(filter.name).equals(filter.value));    
+                            }
+                        }
+                        else if (filter.ftype == PSField.TYPE_BOOLEAN)
+                        {
+                          filterClause.add(new PSFieldCondition(filter.name).equals(Boolean.valueOf(filter.value)));                               
+                        }
+                        else if (filter.ftype == PSField.TYPE_CURRENCY)
+                        {
+                            filterClause.add(new PSFieldCondition(filter.name).equals(filter.value));                              
+                        }
+                        else if (filter.ftype == PSField.TYPE_DATE)
+                        {
+                           filterClause.add(new PSFieldCondition(filter.name).equals(Date.parse(filter.value)));                            
+                        }
+                        else if (filter.ftype == PSField.TYPE_DATETIME)
+                        {
+                           filterClause.add(new PSFieldCondition(filter.name).equals(DateTime.parse(filter.value)));                                                        
+                        }
+                        else if (filter.ftype == PSField.TYPE_DOUBLE)
+                        {
+                           if (filter.value.contains('-'))
+                           {
+                               PSAndCondition tmpCond = new PSAndCondition();
+                               List<String> vals = PSDemoUtils.parseDelimitedString(filter.value, '-');
+                               if (vals.size() != 2)
+                               {
+                                   throw new PSIllegalArgumentException('Incorrect range value [' + filter.value + ']');
+                               }
+                               tmpCond.add(new PSFieldCondition(filter.name).greaterThanOrEqualTo(Double.valueOf(vals[0])));
+                               tmpCond.add(new PSFieldCondition(filter.name).lessThanOrEqualTo(Double.valueOf(vals[1])));
+                               filterClause.add(tmpCond);
+                           }
+                           else if (filter.value.startsWith('>='))
+                           {
+                              filterClause.add(new PSFieldCondition(filter.name).greaterThanOrEqualTo(Double.valueOf(filter.value.substring(2)))); 
+                           }
+                           else if (filter.value.startsWith('<='))
+                           {
+                              filterClause.add(new PSFieldCondition(filter.name).lessThanOrEqualTo(Double.valueOf(filter.value.substring(2))));  
+                           }
+                           else if (filter.value.startsWith('>'))
+                           {
+                              filterClause.add(new PSFieldCondition(filter.name).greaterThan(Double.valueOf(filter.value.substring(1))));  
+                           }
+                           else if (filter.value.startsWith('<'))
+                           {
+                              filterClause.add(new PSFieldCondition(filter.name).lessThan(Double.valueOf(filter.value.substring(1))));  
+                           }
+                           else
+                           {
+                             filterClause.add(new PSFieldCondition(filter.name).equals(Double.valueOf(filter.value)));
+                           }
+                        }
+                    }
+                }
+            }
+            
+            // get earliest date if not null
+            DateTime edt = null;
+            String earliestDate = paramMap.get('earliestDate');
+            if (earliestDate != null)
+            {
+                if (earliestDate.contains('/') && earliestDate.length() == 10)
+                {
+                    Date tmpDate = Date.parse(earliestDate);
+                    edt = DateTime.newInstance(tmpDate, Time.newInstance(00,00,00,00));
+                }
+                else if (earliestDate.length() > 0)
+                {
+                    Integer val = 0 - Integer.valueOf(earliestDate);
+                    Date tmpDate = Date.today();
+                    tmpDate = tmpDate.addDays(val);
+                    edt = DateTime.newInstance(tmpDate, Time.newInstance(00,00,00,00));
+                }
+            }
+            
+            if ((edt != null) && (filterClause != null) && (filterClause.conditions.size() > 0 ))
+            {
+               PSAndCondition wrapCondition = new PSAndCondition();
+               wrapCondition.add(new PSFieldCondition(paramMap.get('dateField')).greaterThanOrEqualTo(edt));
+               wrapCondition.add(filterClause);
+               soqlBldr.wherex(wrapCondition);
+            }
+            else if ((edt != null) && (filterClause == null))
+            {
+               soqlBldr.wherex(new PSFieldCondition(paramMap.get('objectDateField')).greaterThanOrEqualTo(edt)); 
+            }
+            else if ((edt == null) && (filterClause != null) && (filterClause.conditions.size() > 0 ))
+            {
+               soqlBldr.wherex(filterClause);
+            }
+            
+            System.debug('soqlBldr=' + soqlBldr.toSoql());
+            
+            //String queryStr = 'SELECT Id, Subject, MarkerHTML__c,CreatedDate,Color__c,MapIcon__c FROM Case LIMIT 200';
+            String queryStr = soqlBldr.toSoql();
+            
+            List<sObject> recList = Database.query(queryStr);
+            if (processor == null)
+            {
+                resp.data = JSON.serialize(recList);
+            }
+            else 
+            {
+                for (sObject rec : recList)
+                {
+                    processor.processRecord(rec);
+                }
+                processor.postProcess();
+                resp.data = processor.toJSON();
+            }
+            
+        }
+        catch (exception e)
+        {
+            resp.status = PSResponse.ERROR;
+            resp.msg = e.getMessage();
+        }
+        
+        return  JSON.serialize(resp);
+    }
+}

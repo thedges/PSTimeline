@@ -1,13 +1,11 @@
-.THIS .item_labelXX {
-    display:inline-block;
-    width:150px;
-    white-space: nowrap;
-    overflow:hidden !important;
-    text-overflow: ellipsis;
+.THIS .vis-timeline {
+    border-style: none!important;
 }
 
-.THIS #timelineContainer {
+
+.THIS #timelineContainerObject {
 	position: relative;
+    border-style: none!important;
 }
 
 .THIS #controlDiv {
