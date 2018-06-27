@@ -14,6 +14,7 @@
     <aura:attribute name="truncSize" type="Integer" default="50"/>
     <aura:attribute name="tooltips" type="String" default="false"/>
     <aura:attribute name="showFilter" type="String" default="false"/>
+  
 
     <aura:attribute name="objectName" type="String"/>
     <aura:attribute name="objectSearchFields" type="String" default=""/>
@@ -24,11 +25,14 @@
     <aura:attribute name="objectDateField" type="String"/>
     <aura:attribute name="objectColorField" type="String"/>
     <aura:attribute name="objectIconField" type="String"/>
+    <aura:attribute name="objectGroupByField" type="String"/>
     <aura:attribute name="objectEarliestDate" type="String"/>
+    <aura:attribute name="objectSoqlLimit" type="String"/>
     
     <aura:attribute name="buttonLabel" type="String" default="Filter"/>
     <aura:attribute name="processorName" type="String" default="PSTimelineRecordProcessor"/>
     <aura:attribute name="processorOptions" type="Object"/>
+    <aura:attribute name="visibleCount" type="Integer"/>
     
     <!-- ******************* -->
     <!-- internal attributes --> 
@@ -37,6 +41,7 @@
     <aura:attribute name="selectFields" type="String" />
     <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
     <aura:attribute name="context" type="Object" />
+    <aura:attribute name="groups" type="List" />
     <aura:attribute name="recs" type="List" />
     <aura:attribute name="dateSel" type="Date" />
     
@@ -51,10 +56,10 @@
             <lightning:spinner variant="brand" size="large" alternativeText="Retrieving data" />
         </aura:if>
         <div aura:id="filterDiv" id="filterDiv" class="hide slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
-              <c:PSObjectSoqlFilter aura:id="filterComp" recList="{!v.recs}" title="Search" objectName="{!v.objectName}" buttonLabel="{!v.buttonLabel}" 
+              <c:PSObjectSoqlFilter aura:id="filterComp" groupList="{!v.groups}" recList="{!v.recs}" title="Search" objectName="{!v.objectName}" buttonLabel="{!v.buttonLabel}" 
                                     filterFields="{!v.objectSearchFields}" filterCondition="{!v.objectSearchCondition}" selectFields="{!v.selectFields}" 
                                     processorName="{!v.processorName}" processorOptions="{!v.processorOptions}" 
-                                    dateField="{!v.objectDateField}" earliestDate="{!v.objectEarliestDate}"/>
+                                    dateField="{!v.objectDateField}" earliestDate="{!v.objectEarliestDate}" soqlLimit="{!v.objectSoqlLimit}"/>
         </div>
 
         <div aura:id="timelineContainerObject" id="timelineContainerObject">
@@ -78,6 +83,9 @@
         </div>
         <div aura:id="dateSelDiv" id="dateSelDiv" class="hide slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
             <lightning:input type="date" label="Move to day:" name="date" value="{!v.dateSel}" /> 
+        </div>
+        <div aura:id="infoDiv" id="infoDiv" class="slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
+            {!v.visibleCount} / {!v.recs.length}
         </div>
     </div>
     </div>

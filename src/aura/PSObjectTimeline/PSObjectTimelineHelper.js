@@ -1,67 +1,4 @@
 ({
-    getGenericData : function(component) {
-        console.log('getGenericData invoked...');
-        var self = this;
-        var map = {};
-        
-        self.showSpinner(component);
-        
-        map['itemType'] = component.get('v.itemType');
-        map['sldsIconResource'] = component.get('v.sldsIconResource');
-        map['truncSize'] = component.get('v.truncSize');
-        
-        var context = component.get('v.context');
-        if (context.networkPrefix != null)
-        {
-            map['networkPrefix'] = context.networkPrefix;
-        }
-        
-        map['objectName'] = component.get('v.objectName');
-        map['objectIcon'] = component.get('v.objectIcon');
-        map['objectLabelField'] = component.get('v.objectLabelField');
-        map['objectDescField'] = component.get('v.objectDescField');
-        map['objectDateField'] = component.get('v.objectDateField');
-        map['objectIconField'] = component.get('v.objectIconField');
-        map['objectColorField'] = component.get('v.objectColorField');
-        map['objectEarliestDate'] = component.get('v.objectEarliestDate');
-        
-        // save the case
-        var action = component.get("c.queryObjectData");
-        action.setParams({
-            "params": JSON.stringify(map)
-        });
-        
-        action.setCallback(this, function(actionResult) {
-            var resp = JSON.parse(actionResult.getReturnValue());
-            
-            if (resp.status == 'SUCCESS') {
-                var itemData = JSON.parse(resp.data);
-                
-                var timeline = component.get('v.timeline');
-                timeline.setItems(new vis.DataSet(itemData));
-                timeline.fit();
-                self.hideSpinner(component);
-                
-                self.showControlIcons(component);
-                
-            } else {
-                self.hideSpinner(component);
-                
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Warning!",
-                    "message": resp.msg,
-                    //"duration": 2000,
-                    "type": "warning",
-                    mode: "sticky"
-                });
-                toastEvent.fire();
-            }
-            
-        });
-        $A.enqueueAction(action);
-        
-    },
     showSpinner:function(component){
         component.set("v.IsSpinner",true);
     },
@@ -143,30 +80,38 @@
         
         //Set up the callback
         var self = this;
-        action.setCallback(this, function(a) {
-            console.log(a.getReturnValue());
-            var context = JSON.parse(a.getReturnValue());
-            
-            var baseURL = window.location.hostname;
-            console.log('baseURL=' + baseURL);
-            console.log('window.location=' + window.location);
-            if (baseURL.includes("livepreview"))
-            {
-                context.networkPrefix = '/sfsites/c';   // override when in community builder mode
-                var target = component.find("filterDiv");
-                $A.util.removeClass(target, 'hide');
+        action.setCallback(this, function(actionResult) {
+            var state = actionResult.getState();
+            if (state === "SUCCESS") 
+            {     
+                var context = actionResult.getReturnValue();
+                
+                var baseURL = window.location.hostname;
+                console.log('baseURL=' + baseURL);
+                console.log('window.location=' + window.location);
+                if (baseURL.includes("livepreview"))
+                {
+                    context.networkPrefix = '/sfsites/c';   // override when in community builder mode
+                    var target = component.find("filterDiv");
+                    $A.util.removeClass(target, 'hide');
+                }
+                else if (window.location.href.indexOf("flexipageEditor") > -1)
+                {
+                    var target = component.find("filterDiv");
+                    $A.util.removeClass(target, 'hide');
+                }
+                
+                component.set("v.context", context);
+                
+                //self.getGenericData(component);
+                self.setProcessorOptions(component);
+                self.filterData(component);
             }
-            else if (window.location.href.indexOf("flexipageEditor") > -1)
-            {
-                var target = component.find("filterDiv");
-                $A.util.removeClass(target, 'hide');
-            }
+            else 
+            {   
+                self.handleErrors(actionResult.getError());
+            }            
             
-            component.set("v.context", context);
-            
-            //self.getGenericData(component);
-            self.setProcessorOptions(component);
-            self.filterData(component);
         });
         $A.enqueueAction(action);
     },
@@ -212,6 +157,7 @@
         options['objectDateField'] = component.get('v.objectDateField');
         options['objectColorField'] = component.get('v.objectColorField');
         options['objectIconField'] = component.get('v.objectIconField');
+        options['objectGroupByField'] = component.get('v.objectGroupByField');
         options['sldsIconResource'] = component.get('v.sldsIconResource');
         options['itemType'] = component.get('v.itemType');
         options['truncSize'] = component.get('v.truncSize');
@@ -224,5 +170,26 @@
     hideDateSel : function (component) {
         var target = component.find("dateSelDiv");
         $A.util.addClass(target, 'hide');
+    },
+    updateVisibleCount : function (component) {
+        var timeline = component.get("v.timeline");
+        component.set("v.visibleCount", timeline.getVisibleItems().length);
+    },
+    handleErrors : function(errors) {
+        // Configure error toast
+        let toastParams = {
+            title: "Error!",
+            message: "Unknown error", // Default error message
+            type: "error",
+            mode: "sticky"
+        };
+        // Pass the error message if any
+        if (errors && Array.isArray(errors) && errors.length > 0) {
+            toastParams.message = errors[0].message;
+        }
+        // Fire error toast
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams(toastParams);
+        toastEvent.fire();
     }
 })

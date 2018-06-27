@@ -1,37 +1,33 @@
 public class PSObjectSoqlFilterController {
     @AuraEnabled
-    public static String prepFilterFields(String params) 
+    public static Object prepFilterFields(String params) 
     {
         System.debug('prepFilterFields invoked...');
         Map<String, String> paramMap = (Map<String, String>)JSON.deserialize(params,   Map<String, String>.class);
         System.debug(JSON.serializePretty(paramMap));
-        PSResponse resp = new PSResponse();
         
         try
         {  
             String objectName = paramMap.get('objectName');
             String filterFields = paramMap.get('filterFields');
-            resp.data = PSMetaUtils.getMetaFieldDesc3(objectName, filterFields);
+            return PSMetaUtils.getMetaFieldDesc3(objectName, filterFields);
         }
         catch (exception e)
         {
-            resp.status = PSResponse.ERROR;
-            resp.msg = e.getMessage();
+            throw new AuraHandledException(e.getMessage());
         }
         
-        return  JSON.serialize(resp);
     }
-    
+
     @AuraEnabled
-    public static String queryObjectData(String params)
+    public static Object queryObjectDataList(String params)
     {
-        System.debug('queryObjectData invoked...');
+        System.debug('queryObjectDataList...');
         Map<String, String> paramMap = (Map<String, String>)JSON.deserialize(params,   Map<String, String>.class);
         System.debug(JSON.serializePretty(paramMap));
-        PSResponse resp = new PSResponse();
-        
+
         try
-        {  
+        {
             Object filterFieldComps = null;
             if (paramMap.containsKey('filterFieldComps')) filterFieldComps = paramMap.get('filterFieldComps');
             
@@ -54,23 +50,33 @@ public class PSObjectSoqlFilterController {
             String selectFields = paramMap.get('selectFields');
             String filterFields = paramMap.get('filterFields');
             String filterCondition = paramMap.get('filterCondition');
+            String dateField = paramMap.get('dateField');
+            
+            // check for DateTime field
+            PSField fld = PSMetaUtils.getFieldDef(objectName, dateField, null);
+            if (fld.ftype != PSField.TYPE_DATETIME)
+            {
+                throw new PSIllegalArgumentException('The object date field must be of type DATETIME');
+            }
             
             PSSoqlBuilder soqlBldr = new PSSoqlBuilder();
             soqlBldr.selectx(PSDemoUtils.parseCSVString(selectFields));
+
             soqlBldr.fromx(objectName);
             
             PSConditionGroup filterClause = null;
+            if (filterCondition == 'OR')
+            {
+                filterClause = new PSOrCondition();   
+            }
+            else
+            {
+                filterClause = new PSAndCondition();
+            }
+            filterClause.add(new PSFieldCondition(dateField).notEquals(null));
+            
             if (filterFields != null && filterFields.length() > 0)
             {
-                if (filterCondition == 'OR')
-                {
-                  filterClause = new PSOrCondition();   
-                }
-                else
-                {
-                   filterClause = new PSAndCondition();
-                }
-                
                 List<PSField> filterList = (List<PSField>)JSON.deserialize(filterFields, List<PSField>.class);
                 for (PSField filter : filterList)
                 {
@@ -190,21 +196,29 @@ public class PSObjectSoqlFilterController {
                 }
             }
             
-            if ((edt != null) && (filterClause != null) && (filterClause.conditions.size() > 0 ))
+            if ((edt != null) && (filterClause != null) && (filterClause.conditions.size() > 0))
             {
                PSAndCondition wrapCondition = new PSAndCondition();
-               wrapCondition.add(new PSFieldCondition(paramMap.get('dateField')).greaterThanOrEqualTo(edt));
+               wrapCondition.add(new PSFieldCondition(dateField).greaterThanOrEqualTo(edt));
                wrapCondition.add(filterClause);
                soqlBldr.wherex(wrapCondition);
             }
             else if ((edt != null) && (filterClause == null))
             {
-               soqlBldr.wherex(new PSFieldCondition(paramMap.get('objectDateField')).greaterThanOrEqualTo(edt)); 
+               soqlBldr.wherex(new PSFieldCondition(dateField).greaterThanOrEqualTo(edt)); 
             }
             else if ((edt == null) && (filterClause != null) && (filterClause.conditions.size() > 0 ))
             {
                soqlBldr.wherex(filterClause);
             }
+            
+
+            PSOrderBy ob = new PSOrderBy(dateField);
+            ob.descending();
+            soqlBldr.orderbyx(ob);
+            
+            String soqlLimit = paramMap.get('soqlLimit');
+            if (soqlLimit != null && soqlLimit.length() > 0) soqlBldr.limitx(Integer.valueOf(soqlLimit));
             
             System.debug('soqlBldr=' + soqlBldr.toSoql());
             
@@ -214,7 +228,12 @@ public class PSObjectSoqlFilterController {
             List<sObject> recList = Database.query(queryStr);
             if (processor == null)
             {
-                resp.data = JSON.serialize(recList);
+                Map<String, Object> resp = new Map<String, Object>();
+                resp.put('type', 'SOQL');
+                resp.put('data', recList);
+
+                return resp;
+                //return recList;
             }
             else 
             {
@@ -223,16 +242,14 @@ public class PSObjectSoqlFilterController {
                     processor.processRecord(rec);
                 }
                 processor.postProcess();
-                resp.data = processor.toJSON();
+
+                //return processor.getItemList();
+                return processor.getResponse();
             }
-            
         }
-        catch (exception e)
-        {
-            resp.status = PSResponse.ERROR;
-            resp.msg = e.getMessage();
-        }
-        
-        return  JSON.serialize(resp);
+            catch (exception e)
+    {
+      throw new AuraHandledException(e.getMessage());
+    }
     }
 }

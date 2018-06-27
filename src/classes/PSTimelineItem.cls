@@ -4,12 +4,15 @@ public class PSTimelineItem {
     public static String TYPE_RANGE = 'range';
     public static String TYPE_BACKGROUND = 'background';
     
-    public String id;
-    public String title;
-    public String content;
-    public DateTime startDttm;
-    public DateTime endDttm;
-    public String type;
-    public String className;
-    public String style;
+    @AuraEnabled public String id;
+    @AuraEnabled public String title;
+    @AuraEnabled public String content;
+    @AuraEnabled public DateTime startDttm;
+    @AuraEnabled public DateTime endDttm;
+    @AuraEnabled public String type;
+    @AuraEnabled public String className;
+    @AuraEnabled public String style;
+    
+    public PSTimelineItem() {}
+
 }

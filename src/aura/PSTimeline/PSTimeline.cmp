@@ -13,6 +13,7 @@
     <aura:attribute name="daysAfter" type="Integer"/>
     <aura:attribute name="truncSize" type="Integer" default="50"/>
     <aura:attribute name="tooltips" type="String" default="false"/>
+    <aura:attribute name="groupItems" type="String" default="false"/>
     
     <aura:attribute name="activityFlag" type="String" default="true"/>
     <aura:attribute name="taskIcon" type="String" default="standard:task"/>

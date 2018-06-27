@@ -10,11 +10,12 @@
         map['itemType'] = component.get('v.itemType');
         map['sldsIconResource'] = component.get('v.sldsIconResource');
         map['truncSize'] = component.get('v.truncSize');
+        map['groupItems'] = component.get('v.groupItems');
         
         var context = component.get('v.context');
         if (context.networkPrefix != null)
         {
-          map['networkPrefix'] = context.networkPrefix;
+            map['networkPrefix'] = context.networkPrefix;
         }
         
         if (component.get('v.activityFlag') == 'true')
@@ -110,38 +111,49 @@
             "params": JSON.stringify(map)
         });
         
-        console.log('1');
         action.setCallback(this, function(actionResult) {
-            var resp = JSON.parse(actionResult.getReturnValue());
-            
-            if (resp.status == 'SUCCESS') {
-                var itemData = JSON.parse(resp.data);
-                
+            var state = actionResult.getState();
+            if (state === "SUCCESS") 
+            {   
+                var resp = actionResult.getReturnValue();  
                 var timeline = component.get('v.timeline');
-                timeline.setItems(new vis.DataSet(itemData));
+                
+                if (component.get('v.groupItems') == 'true')
+                {
+                    timeline.setGroups(new vis.DataSet(resp.groups));
+                }
+                timeline.setItems(new vis.DataSet(resp.items));
                 timeline.fit();
                 self.hideSpinner(component);
                 
                 self.showControlIcons(component);
-                
-            } else {
-                console.log('3');
+            }
+            else 
+            {   
                 self.hideSpinner(component);
-                
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Warning!",
-                    "message": resp.msg,
-                    //"duration": 2000,
-                    "type": "warning",
-                    mode: "sticky"
-                });
-                toastEvent.fire();
+                self.handleErrors(actionResult.getError());
             }
             
         });
         $A.enqueueAction(action);
         
+    },
+    handleErrors : function(errors) {
+        // Configure error toast
+        let toastParams = {
+            title: "Error!",
+            message: "Unknown error", // Default error message
+            type: "error",
+            mode: "sticky"
+        };
+        // Pass the error message if any
+        if (errors && Array.isArray(errors) && errors.length > 0) {
+            toastParams.message = errors[0].message;
+        }
+        // Fire error toast
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams(toastParams);
+        toastEvent.fire();
     },
     showSpinner:function(component){
         component.set("v.IsSpinner",true);
@@ -170,26 +182,25 @@
             
             iconHTML = '<img src="' + icon + '"></img>';
         }
-        else if (icon.includes(':'))
-        {
-            var res = icon.split(':');
-            if (res.size() == 2)
+            else if (icon.includes(':'))
             {
-                var category = res[0];
-                var name = res[1];
-                
-                
-                if (context.networkPrefix != null)
+                var res = icon.split(':');
+                if (res.size() == 2)
                 {
-                  resourceURL = context.networkPrefix + resourceURL;
+                    var category = res[0];
+                    var name = res[1];
+                    
+                    if (context.networkPrefix != null)
+                    {
+                        resourceURL = context.networkPrefix + resourceURL;
+                    }
+                    
+                    iconHTML = '<span class="slds-icon_container slds-icon-' + category + '-' + name + '" >'
+                    + '<svg aria-hidden="true" class="slds-icon slds-icon--' + size + '" name="' + name + '">' 
+                    + '<use xlink:href="' + resourceURL + '/assets/icons/' + category + '-sprite/svg/symbols.svg#' + name +'"></use>'
+                    + '</svg></span>';
                 }
-                
-                iconHTML = '<span class="slds-icon_container slds-icon-' + category + '-' + name + '" >'
-                + '<svg aria-hidden="true" class="slds-icon slds-icon--' + size + '" name="' + name + '">' 
-                + '<use xlink:href="' + resourceURL + '/assets/icons/' + category + '-sprite/svg/symbols.svg#' + name +'"></use>'
-                + '</svg></span>';
-            }
-        }   
+            }   
         console.log('iconHTML=' + iconHTML);
         return iconHTML;
     },
@@ -224,29 +235,38 @@
         
         //Set up the callback
         var self = this;
-        action.setCallback(this, function(a) {
-            console.log(a.getReturnValue());
-            var context = JSON.parse(a.getReturnValue());
-            
-            var baseURL = window.location.hostname;
-            console.log('baseURL=' + baseURL);
-            if (baseURL.includes("livepreview"))
-            {
-                context.networkPrefix = '/sfsites/c';   // override when in community builder mode
+        action.setCallback(this, function(actionResult) {
+            var state = actionResult.getState();
+            if (state === "SUCCESS") 
+            {   
+                var context = actionResult.getReturnValue();
+                
+                var baseURL = window.location.hostname;
+                console.log('baseURL=' + baseURL);
+                if (baseURL.includes("livepreview"))
+                {
+                    context.networkPrefix = '/sfsites/c';   // override when in community builder mode
+                }
+                
+                component.set("v.context", context);
+                
+                this.getData(component);
+                
             }
-            
-            component.set("v.context", context);
-            
-            this.getData(component);
+            else 
+            {   
+                self.hideSpinner(component);
+                self.handleErrors(actionResult.getError());
+            }            
         });
         $A.enqueueAction(action);
     },
     showControlIcons: function(component) {
-      var target = component.find("controlDiv");
-      $A.util.removeClass(target, 'hide');
+        var target = component.find("controlDiv");
+        $A.util.removeClass(target, 'hide');
         
-      var target = component.find("fitDiv");
-      $A.util.removeClass(target, 'hide');
+        var target = component.find("fitDiv");
+        $A.util.removeClass(target, 'hide');
     },
     initComplete: function(component) {
         console.log('initComplete...');

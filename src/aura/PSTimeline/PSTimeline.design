@@ -8,6 +8,7 @@
     <design:attribute name="daysBefore" label="Days before current date for initial timeline" />
     <design:attribute name="daysAfter" label="Days after current date for initial timeline" />
     <design:attribute name="tooltips" label="Show hover tooltip on truncated items" datasource="true,false" />
+    <design:attribute name="groupItems" label="Group record timeline items in groups" datasource="true,false" />
 
     <design:attribute name="activityFlag" label="Show activity (task, event, email, call)" datasource="true,false"/>
     <design:attribute name="taskIcon" label="Icon reference for tasks" />

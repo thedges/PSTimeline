@@ -9,6 +9,6 @@
       console.log('onFilter...');
       console.log('  > selectFields=' + component.get('v.selectFields'));
       console.log('  > filterFields=' + component.get('v.filterFields')); 
-      helper.executeFilter(component);
+      helper.executeFilter2(component);
 	}
 })

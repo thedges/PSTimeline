@@ -1,12 +1,51 @@
 public class PSTimelineRecordProcessor implements PSRecordProcessorIF {
-    private List<PSTimelineItem> itemList = new List<PSTimelineItem>();
+    private Map<String, Integer> groupMap = new Map<String, Integer>();
+    private List<Object> itemList = new List<Object>();
     private Map<String, String> config = new Map<String, String>();
     
     public void setConfig(Map<String, String> config)
     {
         this.config = config;
     }
+
+    private void addGroup(String g)
+    {
+        if (!groupMap.containsKey(g))
+        {
+          groupMap.put(g, groupMap.size());
+        }
+    }
     
+   public List<Object> getGroupList()
+    {
+        List<Object> gList = new List<Object>();
+        Integer i = 0;
+        for (String key : groupMap.keySet())
+        {
+          Map<String, Object> gmap = new Map<String, Object>();
+          gmap.put('id', groupMap.get(key));
+          gmap.put('content', key);
+          gmap.put('visible', true);
+          gmap.put('style', 'font-weight: bold;color:#259feb;');
+          gList.add(gmap);
+        }
+        return gList;
+    }
+
+    public List<Object> getItemList()
+    {
+        return itemList;
+    }
+
+    public Object getResponse()
+    {
+        Map<String, Object> resp = new Map<String, Object>();
+        resp.put('type', 'PSTimelineRecordProcessor');
+        resp.put('groups', getGroupList());
+        resp.put('items', itemList);
+        return resp;
+    }
+
     public void addConfig(String name, String value)
     {
         config.put(name, value);
@@ -21,16 +60,17 @@ public class PSTimelineRecordProcessor implements PSRecordProcessorIF {
         String dateField = config.get('objectDateField');
         String iconField = config.get('objectIconField');
         String colorField = config.get('objectColorField');
+        String groupByField = config.get('objectGroupByField');
         String itemType = config.get('itemType');
         String networkPrefix = config.get('networkPrefix');
-        String sldsResourceURL = config.get('sldsResourceURL');
+        String sldsResourceURL = config.get('sldsIconResource');
         String bgColor;
         Integer truncSize = Integer.valueOf(config.get('truncSize'));
         
         if (rec.get(dateField) != null)
         {
-            PSTimelineItem item = new PSTimelineItem();
-            item.id = rec.Id;
+            Map<String, Object> item = new Map<String, Object>();
+            item.put('id', rec.Id);
             
             // override icon field with value from record
             if (iconField != null && iconField.length() > 0)
@@ -53,21 +93,33 @@ public class PSTimelineRecordProcessor implements PSRecordProcessorIF {
             
             if (iconHTML != null)
             {
-                item.content = iconHTML + '<span class="slds-p-left_x-small" >' + body + '</span>';
+                item.put('content', iconHTML + '<span class="slds-p-left_x-small" >' + body + '</span>');
             }
             else
             {
-                item.content = body;
+                item.put('content', body);
             }
             
             if (descField != null && descField.length() > 0)
             {
-                item.title = (String)rec.get(descField);
+                item.put('title', (String)rec.get(descField));
             }
             
-            item.startDttm = (DateTime)rec.get(dateField);
-            item.type = itemType;
-            if (bgColor != null) item.style = 'background-color: ' + bgColor + ';';
+
+            item.put('start', (DateTime)rec.get(dateField));
+            item.put('type', itemType);
+
+            if (groupByField != null && groupByField.length() > 0)
+            {
+              addGroup((String)rec.get(groupByField));
+              item.put('group', groupMap.get((String)rec.get(groupByField)));
+            }
+
+
+            if (bgColor != null)
+            {
+                item.put('style', 'background-color: ' + bgColor + ';');
+            }
             itemList.add(item);
         } 
     }
@@ -78,7 +130,7 @@ public class PSTimelineRecordProcessor implements PSRecordProcessorIF {
     
     public String toJSON()
     {
-        return JSON.serialize(itemList, true).replaceAll('startDttm', 'start').replaceAll('endDttm', 'end');
+        return JSON.serialize(itemList, true);
     }
     
     private static String getIconHTML(String icon, String size, String networkPrefix, String sldsResourceURL)
@@ -102,8 +154,8 @@ public class PSTimelineRecordProcessor implements PSRecordProcessorIF {
             List<String> res = icon.split(':');
             if (res.size() == 2)
             {
-                String category = res[0];
-                String name = res[1];
+                String category = res[0].trim();
+                String name = res[1].trim();
                 
                 if (networkPrefix != null && networkPrefix.length() > 0)
                 {

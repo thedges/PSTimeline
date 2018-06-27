@@ -1,11 +1,11 @@
 ({
-	initFilterParams: function(component) {
+    initFilterParams: function(component) {
         console.log('initFilterParams begin...');
         var map = {};
         
         var self = this; // safe reference
-        var filterFields = component.get("v.filterFields");
-        var sobject = component.get("v.objectName");
+        //var filterFields = component.get("v.filterFields");
+        //var sobject = component.get("v.objectName");
         
         map['objectName'] = component.get('v.objectName');
         map['filterFields'] = component.get('v.filterFields');
@@ -15,23 +15,14 @@
             "params": JSON.stringify(map)
         });
         action.setCallback(self, function(actionResult) {
-            console.log('initFilterparams complete!');
-            var resp = JSON.parse(actionResult.getReturnValue());
-            
-            if (resp.status == 'SUCCESS') {
-                component.set("v.filterFieldComps", JSON.parse(resp.data));            
-            } else {
+            var state = actionResult.getState();
+            console.log('filter=' + JSON.stringify(actionResult.getReturnValue()));
+            if (state === "SUCCESS") {
+                component.set("v.filterFieldComps", JSON.parse(actionResult.getReturnValue()));  
+            }
+            else {
                 self.fireFilterStop(component);
-                
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Warning!",
-                    "message": resp.msg,
-                    //"duration": 2000,
-                    "type": "warning",
-                    mode: "sticky"
-                });
-                toastEvent.fire();
+                self.handleErrors(actionResult.getError());
             }
         });
         // Enqueue the action
@@ -47,8 +38,8 @@
         cmpEvent.setParam("action", "stop");
         cmpEvent.fire();
     },
-    executeFilter : function(component) {
-        console.log('executeFilter invoked...');
+    executeFilter2 : function(component) {
+        console.log('executeFilter2 invoked...');
         var self = this;
         var map = {};
         
@@ -65,39 +56,48 @@
         map['processorOptions'] = JSON.stringify(component.get('v.processorOptions'));
         map['dateField'] = component.get('v.dateField');
         map['earliestDate'] = component.get('v.earliestDate');
+        map['soqlLimit'] = component.get('v.soqlLimit');
         
         // save the case
-        var action = component.get("c.queryObjectData");
+        var action = component.get("c.queryObjectDataList");
         action.setParams({
             "params": JSON.stringify(map)
         });
         
         action.setCallback(this, function(actionResult) {
-            var resp = JSON.parse(actionResult.getReturnValue());
-            
-            if (resp.status == 'SUCCESS') {
-                var itemData = JSON.parse(resp.data);
-                component.set('v.recList', itemData);
-                //console.log('itemData=' + resp.data);
+            var state = actionResult.getState();
+            if (state === "SUCCESS") {
+                var resp = actionResult.getReturnValue();
+                console.log(JSON.stringify(resp));
                 
+                component.set("v.groupList", resp.groups);
+                component.set("v.recList", resp.items);
                 self.fireFilterStop(component);
-                
-            } else {
+            }
+            else {
                 self.fireFilterStop(component);
-                
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Warning!",
-                    "message": resp.msg,
-                    //"duration": 2000,
-                    "type": "warning",
-                    mode: "sticky"
-                });
-                toastEvent.fire();
+                self.handleErrors(actionResult.getError());
             }
             
         });
         $A.enqueueAction(action);
         
+    },
+    handleErrors : function(errors) {
+        // Configure error toast
+        let toastParams = {
+            title: "Error!",
+            message: "Unknown error", // Default error message
+            type: "error",
+            mode: "sticky"
+        };
+        // Pass the error message if any
+        if (errors && Array.isArray(errors) && errors.length > 0) {
+            toastParams.message = errors[0].message;
+        }
+        // Fire error toast
+        let toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams(toastParams);
+        toastEvent.fire();
     }
 })

@@ -9,6 +9,7 @@
         tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectDateField'));
         tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectColorField'));
         tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectIconField'));
+        tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectGroupByField'));
         component.set('v.selectFields', tmpStr);
         
         // DOM element where the Timeline will be attached
@@ -47,6 +48,9 @@
             var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysAfter);
             options['end'] = dt;
         }
+
+        options['verticalScroll'] = true;
+        options['groupOrder'] = 'content';
         
         console.log('options=' + JSON.stringify(options));
         
@@ -55,6 +59,10 @@
         
         timeline.on('doubleClick', function (properties) {
            helper.navToRecord(component, properties.item);
+        });
+
+        timeline.on('changed', function (properties) {
+           helper.updateVisibleCount(component);
         });
         
         component.set('v.timeline', timeline);
@@ -145,6 +153,16 @@
     itemsChange: function (component, event, helper) {
         console.log('itemsChange...');
         var timeline = component.get("v.timeline");
+
+        var groups = component.get("v.groups");
+        if (groups != null && groups.length > 0)
+        {
+          timeline.setGroups(new vis.DataSet(groups));
+        }
+        else
+        {
+          timeline.setGroups(null);
+        }
         
         var recs = component.get("v.recs");
         if (recs != null && recs.length > 0)

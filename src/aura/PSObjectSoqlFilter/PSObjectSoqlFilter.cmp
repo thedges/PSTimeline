@@ -7,10 +7,12 @@
     <aura:attribute name="filterCondition" type="String"/>
     <aura:attribute name="dateField" type="String"/>
     <aura:attribute name="earliestDate" type="String"/>
+    <aura:attribute name="soqlLimit" type="String"/>
     
     <aura:attribute name="processorName" type="String"/>
     <aura:attribute name="processorOptions" type="Object"/>
     
+    <aura:attribute name="groupList" type="List" />
     <aura:attribute name="recList" type="List" />
     <aura:attribute name="filterFieldComps" type="List" />
     <aura:attribute name="tableFieldComps" type="List" />
