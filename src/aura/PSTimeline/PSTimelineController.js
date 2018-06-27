@@ -130,5 +130,20 @@
         var endDate = new Date(moveToDate);
         endDate.setDate(endDate.getDate() + 2);
         timeline.setWindow(startDate, endDate);
+    },
+    toggleGroup : function (component, event, helper) {     
+        var timeline = component.get("v.timeline");
+        
+        if (component.get('v.groupItems') == 'true')
+        {
+           component.set('v.groupItems', 'false');
+           timeline.setGroups(null);             
+        }
+        else
+        {
+           component.set('v.groupItems', 'true');
+           timeline.setGroups(component.get('v.groups')); 
+        }
+
     }
 })

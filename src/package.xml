@@ -20,6 +20,7 @@
         <members>PSTimelineCenter</members>
         <members>PSTimelineFilter</members>
         <members>PSTimelineFit</members>
+        <members>PSTimelineGroup</members>
         <members>PSTimelineRefresh</members>
         <members>SLDS261</members>
         <members>VisJS_v4_21_0</members>

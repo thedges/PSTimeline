@@ -7,7 +7,7 @@
     <aura:attribute name="navToNewWindow" type="String" default="false"/>
     <aura:attribute name="itemType" type="String" default="box"/>
     <aura:attribute name="sldsIconResource" type="String" default="/resource/SLDS261"/>
-    <aura:attribute name="minHeight" type="String" default="150px"/>
+    <aura:attribute name="minHeight" type="String" default="200px"/>
     <aura:attribute name="maxHeight" type="String"/>
     <aura:attribute name="daysBefore" type="Integer"/>
     <aura:attribute name="daysAfter" type="Integer"/>
@@ -82,6 +82,7 @@
     <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
     <aura:attribute name="context" type="Object" />
     <aura:attribute name="dateSel" type="Date" />
+    <aura:attribute name="groups" type="Object" />
     <aura:attribute name="totalCount" type="Integer" default="0"/>
     <aura:attribute name="visibleCount" type="Integer" default="0"/>
     
@@ -103,6 +104,9 @@
             </div>
             <div class="slds-p-top_xx-small imageDiv">
                 <img src="{!$Resource.PSTimelineFit}" height="20" width="20" onclick="{!c.fitTimeline}" />
+            </div>
+            <div class="slds-p-top_xx-small imageDiv">
+                <img src="{!$Resource.PSTimelineGroup}" height="20" width="20" onclick="{!c.toggleGroup}" />
             </div>
             <div class="slds-p-top_xx-small imageDiv">
                 <img src="{!$Resource.PSTimelineRefresh}" height="20" width="20" onclick="{!c.resetTimeline}" />

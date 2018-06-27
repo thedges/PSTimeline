@@ -12,6 +12,8 @@
         tmpStr = helper.addCSVValue(tmpStr, component.get('v.objectGroupByField'));
         component.set('v.selectFields', tmpStr);
         
+        component.set('v.showGroups', component.get('v.objectGroupItems'));
+        
         // DOM element where the Timeline will be attached
         var container = document.getElementById(globalId + '_timeline_generic');
         
@@ -150,24 +152,24 @@
         }
 
     },
-    itemsChange: function (component, event, helper) {
-        console.log('itemsChange...');
+    respChange: function (component, event, helper) {
+        console.log('respChange...');
         var timeline = component.get("v.timeline");
 
-        var groups = component.get("v.groups");
-        if (groups != null && groups.length > 0)
+        var processorResp = component.get("v.processorResp");
+        console.log('processorResp=' + JSON.stringify(processorResp));
+        if (component.get('v.showGroups') == 'true' && processorResp.groups != null && processorResp.groups.length > 0)
         {
-          timeline.setGroups(new vis.DataSet(groups));
+          timeline.setGroups(new vis.DataSet(processorResp.groups));
         }
         else
         {
           timeline.setGroups(null);
         }
         
-        var recs = component.get("v.recs");
-        if (recs != null && recs.length > 0)
+        if (processorResp.items != null && processorResp.items.length > 0)
         {
-          timeline.setItems(new vis.DataSet(recs));
+          timeline.setItems(new vis.DataSet(processorResp.items));
         }
         else
         {
@@ -188,7 +190,6 @@
     onDateSel : function (component, event, helper) {
         //console.log('onDateSel');
         var moveToDate = component.get('v.dateSel');
-        //console.log('dateStr=' + moveToDate);
         
         helper.hideDateSel(component);
         
@@ -200,5 +201,20 @@
         var endDate = new Date(moveToDate);
         endDate.setDate(endDate.getDate() + 2);
         timeline.setWindow(startDate, endDate);
+    },
+    toggleGroup : function (component, event, helper) {     
+        var timeline = component.get("v.timeline");
+        
+        if (component.get('v.showGroups') == 'true')
+        {
+           component.set('v.showGroups', 'false');
+           timeline.setGroups(null);             
+        }
+        else
+        {
+           component.set('v.showGroups', 'true');
+           timeline.setGroups(component.get('v.processorResp').groups); 
+        }
+
     }
 })

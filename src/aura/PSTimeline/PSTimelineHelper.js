@@ -118,9 +118,11 @@
                 var resp = actionResult.getReturnValue();  
                 var timeline = component.get('v.timeline');
                 
+                var tmpGrp = new vis.DataSet(resp.groups);
+                component.set('v.groups', tmpGrp);
                 if (component.get('v.groupItems') == 'true')
                 {
-                    timeline.setGroups(new vis.DataSet(resp.groups));
+                    timeline.setGroups(tmpGrp);
                 }
                 timeline.setItems(new vis.DataSet(resp.items));
                 component.set('v.totalCount', resp.items.length);

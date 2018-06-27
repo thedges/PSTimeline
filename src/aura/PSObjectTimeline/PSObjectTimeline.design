@@ -19,6 +19,7 @@
     <design:attribute name="objectDateField" label="API field name for date/time field" />
     <design:attribute name="objectIconField" label="API field name for icon override" />
     <design:attribute name="objectColorField" label="API field name for background color" />
+    <design:attribute name="objectGroupItems" label="Group items by default"  datasource="true,false"/>
     <design:attribute name="objectGroupByField" label="API field name to group items by" />
     <design:attribute name="objectEarliestDate" label="Date in past to limit object search" description="Number of days or date in past to limit object search (positive integer or MM/DD/YYYY)" />
     <design:attribute name="objectSoqlLimit" label="SOQL limit to limit results" description="Integer value for SOQL limit clause. Data is queried in descending date order so you get latest details." />

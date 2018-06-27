@@ -68,10 +68,9 @@
             var state = actionResult.getState();
             if (state === "SUCCESS") {
                 var resp = actionResult.getReturnValue();
-                console.log(JSON.stringify(resp));
+                //console.log(JSON.stringify(resp));
                 
-                component.set("v.groupList", resp.groups);
-                component.set("v.recList", resp.items);
+                component.set("v.processorResp", resp);
                 self.fireFilterStop(component);
             }
             else {

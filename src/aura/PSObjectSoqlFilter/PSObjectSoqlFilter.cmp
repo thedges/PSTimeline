@@ -11,9 +11,8 @@
     
     <aura:attribute name="processorName" type="String"/>
     <aura:attribute name="processorOptions" type="Object"/>
-    
-    <aura:attribute name="groupList" type="List" />
-    <aura:attribute name="recList" type="List" />
+    <aura:attribute name="processorResp" type="Object" />
+ 
     <aura:attribute name="filterFieldComps" type="List" />
     <aura:attribute name="tableFieldComps" type="List" />
     
