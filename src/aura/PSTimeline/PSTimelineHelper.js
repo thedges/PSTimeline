@@ -123,6 +123,7 @@
                     timeline.setGroups(new vis.DataSet(resp.groups));
                 }
                 timeline.setItems(new vis.DataSet(resp.items));
+                component.set('v.totalCount', resp.items.length);
                 timeline.fit();
                 self.hideSpinner(component);
                 
@@ -275,5 +276,9 @@
     hideDateSel : function (component) {
         var target = component.find("dateSelDiv");
         $A.util.addClass(target, 'hide');
+    },
+    updateVisibleCount : function (component) {
+        var timeline = component.get("v.timeline");
+        component.set("v.visibleCount", timeline.getVisibleItems().length);
     }
 })

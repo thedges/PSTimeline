@@ -50,6 +50,8 @@
             options['end'] = dt;
         }
         
+
+        
         console.log('options=' + JSON.stringify(options));
         
         // Create a Timeline
@@ -57,6 +59,10 @@
         
         timeline.on('doubleClick', function (properties) {
            helper.navToRecord(component, properties.item);
+        });
+        
+        timeline.on('changed', function (properties) {
+           helper.updateVisibleCount(component);
         });
         
         component.set('v.timeline', timeline);

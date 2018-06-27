@@ -82,6 +82,9 @@
     <aura:attribute name="IsSpinner" type="Boolean" default="false"/>
     <aura:attribute name="context" type="Object" />
     <aura:attribute name="dateSel" type="Date" />
+    <aura:attribute name="totalCount" type="Integer" default="0"/>
+    <aura:attribute name="visibleCount" type="Integer" default="0"/>
+    
     <aura:handler name="change" value="{!v.dateSel}" action="{!c.onDateSel}"/>
     
     <!-- <div class="container" style="background-color: #ffffff; border-radius: 7px;"> -->
@@ -107,6 +110,9 @@
         </div>
         <div aura:id="dateSelDiv" id="dateSelDiv" class="hide slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
             <lightning:input type="date" label="Move to day:" name="date" value="{!v.dateSel}" /> 
+        </div>
+        <div aura:id="infoDiv" id="infoDiv" class="slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
+            {!v.visibleCount} / {!v.totalCount}
         </div>
     </div>
 </aura:component>
