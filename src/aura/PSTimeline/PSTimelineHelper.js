@@ -126,7 +126,7 @@
                 }
                 timeline.setItems(new vis.DataSet(resp.items));
                 component.set('v.totalCount', resp.items.length);
-                timeline.fit();
+                //timeline.fit();
                 self.hideSpinner(component);
                 
                 self.showControlIcons(component);
