@@ -20,7 +20,7 @@ There are two primary components in this package:
     -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineFit.png" height="15" width="20"/> Click to fit all items within the timeline
     -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineGroup.png" height="15" width="20"/> Click to toggle grouping of records
     -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineRefresh.png" height="20" width="20"/> Click to perform a full data refresh and plot on timeline
-    -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineFilter.png" height="20" width="20"/> Click to get pop-up window to allow dynamic filtering of records
+
   
 <b>This Lightning component is very configurable with following options:</b>
 
@@ -75,7 +75,8 @@ The component supports ability to show child records for up to 5 related child o
     -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineFit.png" height="15" width="20"/> Click to fit all items within the timeline
     -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineGroup.png" height="15" width="20"/> Click to toggle grouping of records
     -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineRefresh.png" height="20" width="20"/> Click to perform a full data refresh and plot on timeline
-  
+    -  <img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineFilter.png" height="20" width="20"/> Click to get pop-up window to allow dynamic filtering of records 
+    
 <b>This Lightning component is very configurable with following options:</b>
 
    - <b>Item Type</b> - item type to show in timeline (box or range)
@@ -103,8 +104,9 @@ The component supports ability to show child records for up to 5 related child o
    - <b>Past Date Limit</b> - used to provide how far in past to look for records to help with performance; options are number of days or date in past to limit object search (enter either 1. positive integer or 2. MM/DD/YYYY)"
    - <b>SOQL LIMIT</b> - an integer value to limit the number of records pulled; use this if your data set is very large; suggest testing for demos around limit of 500 or so; the SOQL query that runs pulls records in descending date order so you get recent records
 
-   
-<b>NOTE:</b> For any icon values provided in the component configuration, you have 3 options:
+ 
+### Icons 
+For any icon values provided in the component configuration, you have 3 options:
    1. Use a reference to one of the Lightning design icons defined [here](http://www.lightningdesignsystem.com/icons/). The format of the configuration string is <category>:<name>. So for the first icon in the Action category, the configuration property would be "action:add_contact". For account icon down in the Standard category section, the configuration property would be "standard:account". The component is preconfigured using this approach.
    2. Upload your own static resource file of images you want and reference normal way of "/resource/<image_name>"
    3. Lastly is providing a full http/https URL to an image stored on some remote server
