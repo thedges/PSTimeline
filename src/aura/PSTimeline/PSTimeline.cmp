@@ -4,7 +4,6 @@
     <!-- ************************ -->
     <!-- configuration attributes -->
     <!-- ************************ -->
-    <aura:attribute name="navToNewWindow" type="String" default="false"/>
     <aura:attribute name="itemType" type="String" default="box"/>
     <aura:attribute name="sldsIconResource" type="String" default="/resource/SLDS261"/>
     <aura:attribute name="minHeight" type="String" default="200px"/>
@@ -12,25 +11,27 @@
     <aura:attribute name="daysBefore" type="Integer"/>
     <aura:attribute name="daysAfter" type="Integer"/>
     <aura:attribute name="truncSize" type="Integer" default="50"/>
-    <aura:attribute name="tooltips" type="String" default="false"/>
-    <aura:attribute name="groupItems" type="String" default="false"/>
+
+    <aura:attribute name="navToNewWindow" type="Boolean" default="false"/>
+    <aura:attribute name="tooltips" type="Boolean" default="false"/>
+    <aura:attribute name="groupItems" type="Boolean" default="false"/>
     
-    <aura:attribute name="activityFlag" type="String" default="true"/>
+    <aura:attribute name="activityFlag" type="Boolean" default="true"/>
     <aura:attribute name="taskIcon" type="String" default="standard:task"/>
     <aura:attribute name="eventIcon" type="String" default="standard:event"/>
     <aura:attribute name="emailIcon" type="String" default="standard:email"/>
-    <aura:attribute name="callIcon" type="String" default="standard:call"/>
+    <aura:attribute name="callIcon" type="String" default="standard:log_a_call"/>
     
-    <aura:attribute name="chatterFlag" type="String" default="true"/>
+    <aura:attribute name="chatterFlag" type="Boolean" default="true"/>
     <aura:attribute name="chatterIcon" type="String" default="standard:post"/>
     
-    <aura:attribute name="contentFlag" type="String" default="true"/>
+    <aura:attribute name="contentFlag" type="Boolean" default="true"/>
     <aura:attribute name="contentIcon" type="String" default="standard:file"/>
     
     <aura:attribute name="caseCommentFlag" type="String" default="false"/>
     <aura:attribute name="caseCommentIcon" type="String" default="custom:custom19"/>
     
-    <aura:attribute name="child1Flag" type="String" default="false"/>
+    <aura:attribute name="child1Flag" type="Boolean" default="false"/>
     <aura:attribute name="child1Icon" type="String" default="standard:default"/>
     <aura:attribute name="child1Object" type="String"/>
     <aura:attribute name="child1ParentField" type="String"/>
@@ -39,7 +40,7 @@
     <aura:attribute name="child1DateField" type="String"/>
     <aura:attribute name="child1ColorField" type="String"/>
     
-    <aura:attribute name="child2Flag" type="String" default="false"/>
+    <aura:attribute name="child2Flag" type="Boolean" default="false"/>
     <aura:attribute name="child2Icon" type="String" default="standard:default"/>
     <aura:attribute name="child2Object" type="String"/>
     <aura:attribute name="child2ParentField" type="String"/>
@@ -48,7 +49,7 @@
     <aura:attribute name="child2DateField" type="String"/>
     <aura:attribute name="child2ColorField" type="String"/>
     
-    <aura:attribute name="child3Flag" type="String" default="false"/>
+    <aura:attribute name="child3Flag" type="Boolean" default="false"/>
     <aura:attribute name="child3Icon" type="String" default="standard:default"/>
     <aura:attribute name="child3Object" type="String"/>
     <aura:attribute name="child3ParentField" type="String"/>
@@ -57,7 +58,7 @@
     <aura:attribute name="child3DateField" type="String"/>    
     <aura:attribute name="child3ColorField" type="String"/>
     
-    <aura:attribute name="child4Flag" type="String" default="false"/>
+    <aura:attribute name="child4Flag" type="Boolean" default="false"/>
     <aura:attribute name="child4Icon" type="String" default="standard:default"/>
     <aura:attribute name="child4Object" type="String"/>
     <aura:attribute name="child4ParentField" type="String"/>
@@ -66,7 +67,7 @@
     <aura:attribute name="child4DateField" type="String"/>
     <aura:attribute name="child4ColorField" type="String"/>
     
-    <aura:attribute name="child5Flag" type="String" default="false"/>
+    <aura:attribute name="child5Flag" type="Boolean" default="false"/>
     <aura:attribute name="child5Icon" type="String" default="standard:default"/>
     <aura:attribute name="child5Object" type="String"/>
     <aura:attribute name="child5ParentField" type="String"/>

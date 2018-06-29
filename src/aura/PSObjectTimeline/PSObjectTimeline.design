@@ -1,5 +1,4 @@
 <design:component label="PSTimeline (Object)">
-    <design:attribute name="navToNewWindow" label="Navigate to new window on double-click" datasource="true,false" />
     <design:attribute name="itemType" label="Item type to show in timeline" datasource="box,point" />
     <design:attribute name="sldsIconResource" label="Static resource reference for SDLS icons" />
     
@@ -7,8 +6,10 @@
     <design:attribute name="maxHeight" label="Maximum height of component" />
     <design:attribute name="daysBefore" label="Days before current date for initial timeline" />
     <design:attribute name="daysAfter" label="Days after current date for initial timeline" />
-    <design:attribute name="tooltips" label="Show hover tooltips" datasource="true,false" />
-    <design:attribute name="showFilter" label="Show filter section" datasource="true,false" />
+
+    <design:attribute name="navToNewWindow" label="Nav to new window on dbl-click" />
+    <design:attribute name="tooltips" label="Show hover tooltips" />
+    <design:attribute name="showFilter" label="Show filter section" />
 
     <design:attribute name="objectName" label="API name of object" />
     <design:attribute name="objectSearchFields" label="Field API names for filter capability" />

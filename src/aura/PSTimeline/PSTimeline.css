@@ -22,6 +22,10 @@
     background-color: #FFFFFF;
 }
 
+.THIS .slds-icon-standard-log_a_call {
+    background-color: #41c4cb!important;
+}
+
 .THIS #infoDiv {
   position: absolute; bottom: 0px; right: 0px; z-index: 5; padding: 3px; 
   color: #259feb;

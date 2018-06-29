@@ -29,10 +29,10 @@ public class PSTimelineController
       if (paramMap.containsKey('networkPrefix')) networkPrefix = paramMap.get('networkPrefix');
 
       groupMap.put('Record', groupMap.size());
-      groupMap.put('Activity', groupMap.size());
-      groupMap.put('Content', groupMap.size());
-      groupMap.put('Chatter', groupMap.size());
-      groupMap.put('Case Comment', groupMap.size());
+
+
+
+
 
       // **************** //
       // get created date //
@@ -79,6 +79,8 @@ public class PSTimelineController
       ////////////////////
       if (paramMap.get('activityFlag') == 'true')
       {
+        groupMap.put('Activity', groupMap.size());
+          
         String taskIcon = paramMap.get('taskIcon');     // standard:task
         String eventIcon = paramMap.get('eventIcon');   // standard:event
         String emailIcon = paramMap.get('emailIcon');   // standard:email
@@ -172,6 +174,8 @@ public class PSTimelineController
       ///////////////
       if (paramMap.get('contentFlag') == 'true')
       {
+        groupMap.put('Content', groupMap.size());
+          
         for (ContentDocumentLink cdl : [SELECT ContentDocumentId, ContentDocument.FileType, ContentDocument.Title, ContentDocument.CreatedDate, LinkedEntityId, ShareType, SystemModstamp, Visibility
                                         FROM ContentDocumentLink
                                         WHERE LinkedEntityId = :recordId])
@@ -210,6 +214,8 @@ public class PSTimelineController
       ////////////////////////////
       if (paramMap.get('chatterFlag') == 'true')
       {
+        groupMap.put('Chatter', groupMap.size());
+          
         for (FeedItem fi : [SELECT Id, Body, LastModifiedDate
                             FROM FeedItem
                             WHERE ParentId = :recordId AND Type = 'TextPost'])
@@ -246,6 +252,8 @@ public class PSTimelineController
       ///////////////////////
       if (paramMap.get('caseCommentFlag') == 'true')
       {
+        groupMap.put('Case Comment', groupMap.size());
+          
         for (CaseComment cc : [SELECT Id, CommentBody, LastModifiedDate
                                FROM CaseComment
                                WHERE ParentId = :recordId])

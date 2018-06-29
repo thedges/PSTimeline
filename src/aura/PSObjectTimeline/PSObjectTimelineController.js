@@ -14,7 +14,6 @@
         
         component.set('v.showGroups', component.get('v.objectGroupItems'));
         
-        // DOM element where the Timeline will be attached
         var container = document.getElementById(globalId + '_timeline_generic');
         
         var items = null;
@@ -29,7 +28,7 @@
         
         var today = new Date();
         var showTooltips = component.get('v.tooltips');
-        options['showTooltips'] = (showTooltips == 'true');
+        options['showTooltips'] = showTooltips;
         
         var minHeight = component.get('v.minHeight');
         if (minHeight != null && minHeight.length > 0) options['minHeight'] = minHeight;
@@ -70,7 +69,7 @@
         component.set('v.timeline', timeline);
         
         var showFilter = component.get('v.showFilter');
-        if (showFilter == 'true')
+        if (showFilter)
         {
             var target = component.find("filterDiv");
             $A.util.removeClass(target, 'hide');
@@ -158,7 +157,7 @@
 
         var processorResp = component.get("v.processorResp");
         console.log('processorResp=' + JSON.stringify(processorResp));
-        if (component.get('v.showGroups') == 'true' && processorResp.groups != null && processorResp.groups.length > 0)
+        if (component.get('v.showGroups') && processorResp.groups != null && processorResp.groups.length > 0)
         {
           timeline.setGroups(new vis.DataSet(processorResp.groups));
         }
@@ -205,14 +204,14 @@
     toggleGroup : function (component, event, helper) {     
         var timeline = component.get("v.timeline");
         
-        if (component.get('v.showGroups') == 'true')
+        if (component.get('v.showGroups'))
         {
-           component.set('v.showGroups', 'false');
+           component.set('v.showGroups', false);
            timeline.setGroups(null);             
         }
         else
         {
-           component.set('v.showGroups', 'true');
+           component.set('v.showGroups', true);
            timeline.setGroups(component.get('v.processorResp').groups); 
         }
 

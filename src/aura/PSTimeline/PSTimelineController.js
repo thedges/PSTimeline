@@ -28,7 +28,7 @@
         
         var today = new Date();
         var showTooltips = component.get('v.tooltips');
-        options['showTooltips'] = (showTooltips == 'true');
+        options['showTooltips'] = (showTooltips);
         
         var minHeight = component.get('v.minHeight');
         if (minHeight != null && minHeight.length > 0) options['minHeight'] = minHeight;
@@ -49,8 +49,6 @@
             var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysAfter);
             options['end'] = dt;
         }
-        
-
         
         console.log('options=' + JSON.stringify(options));
         
@@ -134,14 +132,14 @@
     toggleGroup : function (component, event, helper) {     
         var timeline = component.get("v.timeline");
         
-        if (component.get('v.groupItems') == 'true')
+        if (component.get('v.groupItems'))
         {
-           component.set('v.groupItems', 'false');
+           component.set('v.groupItems', false);
            timeline.setGroups(null);             
         }
         else
         {
-           component.set('v.groupItems', 'true');
+           component.set('v.groupItems', true);
            timeline.setGroups(component.get('v.groups')); 
         }
 

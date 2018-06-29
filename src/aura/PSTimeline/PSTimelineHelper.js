@@ -18,7 +18,7 @@
             map['networkPrefix'] = context.networkPrefix;
         }
         
-        if (component.get('v.activityFlag') == 'true')
+        if (component.get('v.activityFlag'))
         {
             map['activityFlag'] = component.get('v.activityFlag');
             map['taskIcon'] = component.get('v.taskIcon');
@@ -27,25 +27,25 @@
             map['callIcon'] = component.get('v.callIcon');
         }
         
-        if (component.get('v.chatterFlag') == 'true')
+        if (component.get('v.chatterFlag'))
         {
             map['chatterFlag'] = component.get('v.chatterFlag');
             map['chatterIcon'] = component.get('v.chatterIcon');
         }
         
-        if (component.get('v.contentFlag') == 'true')
+        if (component.get('v.contentFlag'))
         {
             map['contentFlag'] = component.get('v.contentFlag');
             map['contentIcon'] = component.get('v.contentIcon');
         }
         
-        if (component.get('v.caseCommentFlag') == 'true')
+        if (component.get('v.caseCommentFlag'))
         {
             map['caseCommentFlag'] = component.get('v.caseCommentFlag');
             map['caseCommentIcon'] = component.get('v.caseCommentIcon');
         }
         
-        if (component.get('v.child1Flag') == 'true')
+        if (component.get('v.child1Flag'))
         {
             map['child1Flag'] = component.get('v.child1Flag');
             map['child1Icon'] = component.get('v.child1Icon');
@@ -57,7 +57,7 @@
             map['child1ColorField'] = component.get('v.child1ColorField');
         }
         
-        if (component.get('v.child2Flag') == 'true')
+        if (component.get('v.child2Flag'))
         {        
             map['child2Flag'] = component.get('v.child2Flag');
             map['child2Icon'] = component.get('v.child2Icon');
@@ -69,7 +69,7 @@
             map['child2ColorField'] = component.get('v.child2ColorField');
         }
         
-        if (component.get('v.child3Flag') == 'true')
+        if (component.get('v.child3Flag'))
         {
             map['child3Flag'] = component.get('v.child3Flag');
             map['child3Icon'] = component.get('v.child3Icon');
@@ -81,7 +81,7 @@
             map['child3ColorField'] = component.get('v.child3ColorField');
         }
         
-        if (component.get('v.child4Flag') == 'true')
+        if (component.get('v.child4Flag'))
         {
             map['child4Flag'] = component.get('v.child4Flag');
             map['child4Icon'] = component.get('v.child4Icon');
@@ -93,7 +93,7 @@
             map['child4ColorField'] = component.get('v.child4ColorField');
         }
         
-        if (component.get('v.child5Flag') == 'true')
+        if (component.get('v.child5Flag'))
         {
             map['child5Flag'] = component.get('v.child5Flag');
             map['child5Icon'] = component.get('v.child5Icon');
@@ -120,7 +120,7 @@
                 
                 var tmpGrp = new vis.DataSet(resp.groups);
                 component.set('v.groups', tmpGrp);
-                if (component.get('v.groupItems') == 'true')
+                if (component.get('v.groupItems'))
                 {
                     timeline.setGroups(tmpGrp);
                 }
@@ -211,11 +211,11 @@
         console.log("navToRecord called");
         console.log("id=" + id);
         
-        if (!id.includes('-'))
+        if (id != null && !id.includes('-'))
         {
             var navToNewWindow = component.get('v.navToNewWindow');
             
-            if (navToNewWindow == 'true')
+            if (navToNewWindow)
             {
                 window.open('/' + id);
             }

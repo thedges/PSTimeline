@@ -53,11 +53,11 @@
         console.log("navToRecord called");
         console.log("id=" + id);
         
-        if (!id.includes('-'))
+        if (id != null && !id.includes('-'))
         {
             var navToNewWindow = component.get('v.navToNewWindow');
             
-            if (navToNewWindow == 'true')
+            if (navToNewWindow)
             {
                 window.open('/' + id);
             }

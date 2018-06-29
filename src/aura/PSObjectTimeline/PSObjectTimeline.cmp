@@ -4,7 +4,6 @@
     <!-- ************************ -->
     <!-- configuration attributes -->
     <!-- ************************ -->
-    <aura:attribute name="navToNewWindow" type="String" default="false"/>
     <aura:attribute name="itemType" type="String" default="box"/>
     <aura:attribute name="sldsIconResource" type="String" default="/resource/SLDS261"/>
     <aura:attribute name="minHeight" type="String" default="200px"/>
@@ -12,8 +11,10 @@
     <aura:attribute name="daysBefore" type="Integer"/>
     <aura:attribute name="daysAfter" type="Integer"/>
     <aura:attribute name="truncSize" type="Integer" default="50"/>
-    <aura:attribute name="tooltips" type="String" default="false"/>
-    <aura:attribute name="showFilter" type="String" default="false"/>
+
+    <aura:attribute name="navToNewWindow" type="Boolean" default="false"/>
+    <aura:attribute name="tooltips" type="Boolean" default="false"/>
+    <aura:attribute name="showFilter" type="Boolean" default="false"/>
     
     
     <aura:attribute name="objectName" type="String"/>
