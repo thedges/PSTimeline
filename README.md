@@ -7,7 +7,7 @@ There are two primary components in this package:
 
 ## PSTimeline (Record)
 ![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimeline.gif "Sample Image")
-<img src="https://github.com/thedges/PSTimeline/blob/master/PSTimeline.gif" height="400px"></img>
+
 
 <b>Some options of the component:</b>
   * Drag left and right on the timeline to slide to different dates
@@ -62,7 +62,7 @@ The component supports ability to show child records for up to 5 related child o
    
 
 ## PSTimeline (Object)
-![alt text](https://github.com/thedges/PSTimeline/blob/master/PSTimelineObject.gif "Sample Image")
+<img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineObject.gif" height="500px"></img>
 
 <b>Similar to above, options of the component:</b>
   * Drag left and right on the timeline to slide to different dates
