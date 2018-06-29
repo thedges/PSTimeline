@@ -28,7 +28,7 @@
     <aura:attribute name="contentFlag" type="Boolean" default="true"/>
     <aura:attribute name="contentIcon" type="String" default="standard:file"/>
     
-    <aura:attribute name="caseCommentFlag" type="String" default="false"/>
+    <aura:attribute name="caseCommentFlag" type="Boolean" default="false"/>
     <aura:attribute name="caseCommentIcon" type="String" default="custom:custom19"/>
     
     <aura:attribute name="child1Flag" type="Boolean" default="false"/>
