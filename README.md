@@ -116,16 +116,16 @@ For any icon values provided in the component configuration, you have 3 options:
 ### Formula Fields 
 Remember that you can use formula fields anywhere in the configuration properties where you need to provide a field API name for options like item color, item hover details, item label or item grouping. So for color, you can have a formula field like following to show different background colors for items:
 
-  CASE(Status,
+  `CASE(Status,
   "New", "#d9d9d9",
   "Working", "#ccebff",
   "Escalated", "#ffb3b3",
   "Closed", "#adebad",
-  "#d9d9d9")
+  "#d9d9d9")`
   
 Or show different item icon with formula field like following:
 
-  LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260)) & 
+  `LEFT($Api.Partner_Server_URL_260, FIND( '/services', $Api.Partner_Server_URL_260)) & 
     CASE( Type, 
     "Animal Control", "resource/CaseType/OneCityAnimalInactive.png", 
     "Events", "resource/CaseType/OneCityEventsInactive.png", 
@@ -134,17 +134,17 @@ Or show different item icon with formula field like following:
     "Noise", "resource/CaseType/OneCityNoiseInactive.png", 
     "Public Works", "resource/CaseType/OneCityPublicWorksInactive.png", 
     "Street and Traffic", "resource/CaseType/OneCityStreetInactive.png", 
-    "resource/CaseType/OneCityNoTypeInactive.png")
+    "resource/CaseType/OneCityNoTypeInactive.png")`
     
 And lastly for item hover details, you can have a formula field that has embedded HTML tags to format your hover pop-up as you like:
 
-  '<h3>Subject + '</h3>' + 
+  `'<h3>Subject + '</h3>' + 
   '<table><tr><td valign="top" style="padding-right: 10px">' + 
   '</td><td>' + 
   '<br/><b>Type:</b> ' + TEXT(Type) + 
   '<br/><b>Status:</b> ' + TEXT(Status) + 
   '<br/><b>Priority:</b> ' + TEXT(Priority) + 
-  '</td></tr></table>'
+  '</td></tr></table>'`
 
 <b>Dependency:</b> Install the [LightningStrike.io](https://github.com/thedges/Lightning-Strike) and [PSCommon](https://github.com/thedges/PSCommon) packages first
 
