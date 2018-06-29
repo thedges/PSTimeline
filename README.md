@@ -62,7 +62,7 @@ The component supports ability to show child records for up to 5 related child o
    
 
 ## PSTimeline (Object)
-<img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineObject.gif" height="600px" width="600px"></img>
+<img src="https://github.com/thedges/PSTimeline/blob/master/PSTimelineObject.gif" height="600px" width="800px"></img>
 
 <b>Similar to above, options of the component:</b>
   * Drag left and right on the timeline to slide to different dates
