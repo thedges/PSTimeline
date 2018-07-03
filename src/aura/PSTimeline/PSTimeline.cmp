@@ -33,6 +33,9 @@
 
     <aura:attribute name="caseMilestoneFlag" type="Boolean" default="false"/>
     <aura:attribute name="caseMilestoneIcon" type="String" default="standard:case_milestone"/>
+
+    <aura:attribute name="kaFlag" type="Boolean" default="false"/>
+    <aura:attribute name="kaIcon" type="String" default="standard:knowledge"/>
     
     <aura:attribute name="child1Flag" type="Boolean" default="false"/>
     <aura:attribute name="child1Icon" type="String" default="standard:default"/>

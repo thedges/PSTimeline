@@ -334,6 +334,45 @@ public class PSTimelineController
         }
       }
 
+      ////////////////////////////
+      // get knowledge articles // 
+      ////////////////////////////
+      if (paramMap.get('kaFlag') == 'true')
+      {
+        groupMap.put('Knowledge Article', groupMap.size());
+          
+        for (CaseArticle cc : [SELECT Id, KnowledgeArticleId, KnowledgeArticleVersionId, KnowledgeArticleVersion.Title, CreatedDate  
+                                   FROM CaseArticle 
+                                  WHERE CaseId = :recordId AND IsDeleted != true])
+        {
+          Map<String, Object> item = new Map<String, Object>();
+          item.put('id', cc.KnowledgeArticleVersionId);
+
+          String kaIcon = paramMap.get('kaIcon');   // standard:knowldedge
+
+          String iconHTML = getIconHTML(kaIcon, 'x-small', networkPrefix, sldsResourceURL);
+          String msg = cc.KnowledgeArticleVersion.Title;
+          String body = cleanItemString(msg, truncSize);
+
+          if (iconHTML != null)
+          {
+            item.put('content', iconHTML + '<span class="slds-p-left_x-small" >' + body + '</span>');
+          }
+          else
+          {
+            item.put('content', body);
+          }
+
+          if (msg != null && msg.length() > truncSize) item.put('title', msg);
+          item.put('start', cc.CreatedDate);
+          item.put('type', itemType);
+          item.put('group', groupMap.get('Knowledge Article'));
+
+          itemList.add(item);
+
+        }
+      }
+
       // loop through child object count
       for (Integer j = 1; j <= 5; j++)
       {

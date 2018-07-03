@@ -50,6 +50,12 @@
             map['caseMilestoneFlag'] = component.get('v.caseMilestoneFlag');
             map['caseMilestoneIcon'] = component.get('v.caseMilestoneIcon');
         }
+
+        if (component.get('v.kaFlag'))
+        {
+            map['kaFlag'] = component.get('v.kaFlag');
+            map['kaIcon'] = component.get('v.kaIcon');
+        }  
         
         if (component.get('v.child1Flag'))
         {
