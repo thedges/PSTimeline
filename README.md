@@ -53,6 +53,9 @@ There are two primary components in this package:
    
    - <b>Show Case Milestones</b> - boolean to show case milestones
    - <b>Case Comment Icon</b> - the icon to show for case comments (default: "standard:case_milestone")
+   
+   - <b>Show Case Articles</b> - boolean to show knowledge articles attached to cases
+   - <b>Case Article Icon</b> - the icon to show for case articles (default: "standard:knowledge")
 
 The component supports ability to show child records for up to 5 related child objects. Configuration options are:
 
