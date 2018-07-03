@@ -26,6 +26,9 @@
     <design:attribute name="caseCommentFlag" label="Show case comments" />
     <design:attribute name="caseCommentIcon" label="Icon reference for case comments" />
 
+    <design:attribute name="caseMilestoneFlag" label="Show case milestones" />
+    <design:attribute name="caseMilestoneIcon" label="Icon reference for case milestones" />
+
     <design:attribute name="child1Flag" label="1. Show child record activity" />
     <design:attribute name="child1Icon" label="1. Icon reference for child" />
     <design:attribute name="child1Object" label="1. API name of child object" />

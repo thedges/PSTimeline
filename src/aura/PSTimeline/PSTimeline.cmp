@@ -30,6 +30,9 @@
     
     <aura:attribute name="caseCommentFlag" type="Boolean" default="false"/>
     <aura:attribute name="caseCommentIcon" type="String" default="custom:custom19"/>
+
+    <aura:attribute name="caseMilestoneFlag" type="Boolean" default="false"/>
+    <aura:attribute name="caseMilestoneIcon" type="String" default="standard:case_milestone"/>
     
     <aura:attribute name="child1Flag" type="Boolean" default="false"/>
     <aura:attribute name="child1Icon" type="String" default="standard:default"/>

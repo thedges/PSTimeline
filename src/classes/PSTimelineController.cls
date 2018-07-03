@@ -286,6 +286,54 @@ public class PSTimelineController
         }
       }
 
+      /////////////////////////
+      // get case milestones //
+      /////////////////////////
+      if (paramMap.get('caseMilestoneFlag') == 'true')
+      {
+        groupMap.put('Case Milestone', groupMap.size());
+          
+        for (CaseMilestone cc : [SELECT Id, MilestoneType.Name, IsViolated, IsCompleted, TargetDate
+                               FROM CaseMilestone
+                               WHERE CaseId = :recordId AND IsDeleted != true])
+        {
+          Map<String, Object> item = new Map<String, Object>();
+          item.put('id', cc.Id);
+
+          String milestoneIcon = paramMap.get('caseMilestoneIcon');   // standard:case_milestone
+
+          String iconHTML = getIconHTML(milestoneIcon, 'x-small', networkPrefix, sldsResourceURL);
+          String msg = cc.MilestoneType.Name;
+          if (cc.IsViolated)
+          {
+              msg += ' (violation)';  
+          }
+          else if (cc.IsCompleted)
+          {
+              msg += ' (completed)'; 
+          }
+          String body = cleanItemString(msg, truncSize);
+
+          if (iconHTML != null)
+          {
+            item.put('content', iconHTML + '<span class="slds-p-left_x-small" >' + body + '</span>');
+          }
+          else
+          {
+            item.put('content', body);
+          }
+
+          if (msg != null && msg.length() > truncSize) item.put('title', msg);
+          item.put('start', cc.TargetDate);
+          item.put('type', itemType);
+          item.put('group', groupMap.get('Case Milestone'));
+          if (cc.IsViolated) item.put('className', 'Overdue');
+
+          itemList.add(item);
+
+        }
+      }
+
       // loop through child object count
       for (Integer j = 1; j <= 5; j++)
       {
