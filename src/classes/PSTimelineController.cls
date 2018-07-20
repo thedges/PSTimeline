@@ -1,4 +1,4 @@
-public class PSTimelineController
+public without sharing class PSTimelineController
 {
   @AuraEnabled
   public static Object queryData(String params)
@@ -104,7 +104,16 @@ public class PSTimelineController
           }
 
           item.put('title', e.Description);
-          item.put('start', e.ActivityDateTime);
+            
+          if (e.ActivityDateTime != null)
+          {
+            item.put('start', e.ActivityDateTime);
+          }
+          else if (e.StartDateTime != null)
+          {
+            item.put('start', e.StartDateTime);
+          }
+            
           item.put('type', itemType);
           item.put('group', groupMap.get('Activity'));
 
