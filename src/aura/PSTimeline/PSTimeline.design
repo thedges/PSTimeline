@@ -1,4 +1,5 @@
 <design:component label="PSTimeline (Record)">
+    <design:attribute name="title" label="Title at top of component"/>
     <design:attribute name="itemType" label="Item type to show in timeline" datasource="box,point" />
     <design:attribute name="sldsIconResource" label="Static resource reference for SDLS icons" />
     

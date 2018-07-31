@@ -32,7 +32,7 @@
             <div class="slds-p-horizontal--small slds-size--1-of-1">
                 <fieldset class="slds-box slds-theme--default">
                     <aura:renderIf isTrue="{!v.title.length > 0}">
-                        <legend class="slds-text-heading--medium "><span style="font-weight:bold">{!v.title}</span></legend>
+                        <legend class="slds-text-heading--small"><span style="font-weight:bold;color:#1172cf;">{!v.title}</span></legend>
                     </aura:renderIf>
                     <form class="slds-form--inline" id="filterForm">
                         <aura:renderIf isTrue="{!v.filterFieldComps.length > 0}">

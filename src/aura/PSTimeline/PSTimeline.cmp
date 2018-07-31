@@ -4,6 +4,7 @@
     <!-- ************************ -->
     <!-- configuration attributes -->
     <!-- ************************ -->
+    <aura:attribute name="title" type="String" default=""/>
     <aura:attribute name="itemType" type="String" default="box"/>
     <aura:attribute name="sldsIconResource" type="String" default="/resource/SLDS261"/>
     <aura:attribute name="minHeight" type="String" default="200px"/>
@@ -96,11 +97,15 @@
     <aura:handler name="change" value="{!v.dateSel}" action="{!c.onDateSel}"/>
     
     <!-- <div class="container" style="background-color: #ffffff; border-radius: 7px;"> -->
-    
-    <div class="slds-card" style="border: none;border-radius: 7px;" aura:id="timelineContainer" id="timelineContainer">
+
+    <div class="slds-card" style="border: none;border-radius: 7px;">
         <aura:if isTrue="{!v.IsSpinner}">
             <lightning:spinner variant="brand"  size="large" />
         </aura:if>
+        <aura:renderIf isTrue="{!v.title.length > 0}">
+            <legend class="slds-text-heading--medium slds-p-left_xx-small"><span style="font-weight:bold">{!v.title}</span></legend>
+        </aura:renderIf>
+        <div aura:id="timelineContainer" id="timelineContainer">
         <div id="{!globalId + '_timeline'}"></div>
         <div aura:id="controlDiv" id="controlDiv" class="hide">
             <div class="imageDiv">
@@ -124,6 +129,7 @@
         </div>
         <div aura:id="infoDiv" id="infoDiv" class="slds-p-bottom_x-small slds-p-right_x-small slds-p-left_x-small">
             {!v.visibleCount} / {!v.totalCount}
+        </div>
         </div>
     </div>
 </aura:component>
