@@ -165,6 +165,10 @@ And lastly for item hover details, you can have a formula field that has embedde
   '<br/><b>Status:</b> ' + TEXT(Status) + 
   '<br/><b>Priority:</b> ' + TEXT(Priority) + 
   '</td></tr></table>'`
+  
+### Deployment Issues 
+Depending on the configuration of your target org, you may run in to one of the following deploy errors:
+  1. classes/PSTimelineController.cls(305,33):Invalid type: Schema.CaseMilestone   - make sure to [enable Entitlements](https://help.salesforce.com/articleView?id=entitlements_enabling.htm&type=5) in your org; 
 
 <b>Dependency:</b> Install the [LightningStrike.io](https://github.com/thedges/Lightning-Strike) and [PSCommon](https://github.com/thedges/PSCommon) packages first
 
