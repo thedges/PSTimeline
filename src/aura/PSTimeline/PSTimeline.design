@@ -40,7 +40,9 @@
     <design:attribute name="child1LabelField" label="1. API field name for item label" />
     <design:attribute name="child1DescField" label="1. API field name for item hover details" />
     <design:attribute name="child1DateField" label="1. API field name for date/time" />
+    <design:attribute name="child1EndDateField" label="1. API field name for end date/time (range)" />
     <design:attribute name="child1ColorField" label="1. API field name for background color" />
+    <design:attribute name="child1DefaultColor" label="1. Default background color" />
 
     <design:attribute name="child2Flag" label="2. Show child record activity" />
     <design:attribute name="child2Icon" label="2. Icon reference for child" />
@@ -49,7 +51,9 @@
     <design:attribute name="child2LabelField" label="2. API field name for item label" />
     <design:attribute name="child2DescField" label="2. API field name for item hover details" />
     <design:attribute name="child2DateField" label="2. API field name for date/time" />
+    <design:attribute name="child2EndDateField" label="2. API field name for end date/time (range)" />
     <design:attribute name="child2ColorField" label="2. API field name for background color" />
+    <design:attribute name="child2DefaultColor" label="2. Default background color" />
 
     <design:attribute name="child3Flag" label="3. Show child record activity" />
     <design:attribute name="child3Icon" label="3. Icon reference for child" />
@@ -58,7 +62,9 @@
     <design:attribute name="child3LabelField" label="3. API field name for item label" />
     <design:attribute name="child3DescField" label="3. API field name for item hover details" />
     <design:attribute name="child3DateField" label="3. API field name for date/time" />
+    <design:attribute name="child3EndDateField" label="3. API field name for end date/time (range)" />
     <design:attribute name="child3ColorField" label="3. API field name for background color" />
+    <design:attribute name="child3DefaultColor" label="3. Default background color" />
 
     <design:attribute name="child4Flag" label="4. Show child record activity" />
     <design:attribute name="child4Icon" label="4. Icon reference for child" />
@@ -67,7 +73,9 @@
     <design:attribute name="child4LabelField" label="4. API field name for item label" />
     <design:attribute name="child4DescField" label="4. API field name for item hover details" />
     <design:attribute name="child4DateField" label="4. API field name for date/time" />
+    <design:attribute name="child4EndDateField" label="4. API field name for end date/time (range)" />
     <design:attribute name="child4ColorField" label="4. API field name for background color" />
+    <design:attribute name="child4DefaultColor" label="4. Default background color" />
 
     <design:attribute name="child5Flag" label="5. Show child record activity" />
     <design:attribute name="child5Icon" label="5. Icon reference for child" />
@@ -76,6 +84,8 @@
     <design:attribute name="child5LabelField" label="5. API field name for item label" />
     <design:attribute name="child5DescField" label="5. API field name for item hover details" />
     <design:attribute name="child5DateField" label="5. API field name for date/time" />
+    <design:attribute name="child5EndDateField" label="5. API field name for end date/time (range)" />
     <design:attribute name="child5ColorField" label="5. API field name for background color" />
+    <design:attribute name="child5DefaultColor" label="5. Default background color" />
 
 </design:component>

@@ -45,7 +45,9 @@
     <aura:attribute name="child1LabelField" type="String"/>
     <aura:attribute name="child1DescField" type="String"/>
     <aura:attribute name="child1DateField" type="String"/>
+    <aura:attribute name="child1EndDateField" type="String"/>
     <aura:attribute name="child1ColorField" type="String"/>
+    <aura:attribute name="child1DefaultColor" type="String"/>
     
     <aura:attribute name="child2Flag" type="Boolean" default="false"/>
     <aura:attribute name="child2Icon" type="String" default="standard:default"/>
@@ -54,7 +56,9 @@
     <aura:attribute name="child2LabelField" type="String"/>
     <aura:attribute name="child2DescField" type="String"/>
     <aura:attribute name="child2DateField" type="String"/>
+    <aura:attribute name="child2EndDateField" type="String"/>
     <aura:attribute name="child2ColorField" type="String"/>
+    <aura:attribute name="child2DefaultColor" type="String"/>
     
     <aura:attribute name="child3Flag" type="Boolean" default="false"/>
     <aura:attribute name="child3Icon" type="String" default="standard:default"/>
@@ -63,7 +67,9 @@
     <aura:attribute name="child3LabelField" type="String"/>
     <aura:attribute name="child3DescField" type="String"/>
     <aura:attribute name="child3DateField" type="String"/>    
+    <aura:attribute name="child3EndDateField" type="String"/>
     <aura:attribute name="child3ColorField" type="String"/>
+    <aura:attribute name="child3DefaultColor" type="String"/>
     
     <aura:attribute name="child4Flag" type="Boolean" default="false"/>
     <aura:attribute name="child4Icon" type="String" default="standard:default"/>
@@ -72,7 +78,9 @@
     <aura:attribute name="child4LabelField" type="String"/>
     <aura:attribute name="child4DescField" type="String"/>
     <aura:attribute name="child4DateField" type="String"/>
+    <aura:attribute name="child4EndDateField" type="String"/>
     <aura:attribute name="child4ColorField" type="String"/>
+    <aura:attribute name="child4DefaultColor" type="String"/>
     
     <aura:attribute name="child5Flag" type="Boolean" default="false"/>
     <aura:attribute name="child5Icon" type="String" default="standard:default"/>
@@ -81,7 +89,9 @@
     <aura:attribute name="child5LabelField" type="String"/>
     <aura:attribute name="child5DescField" type="String"/>
     <aura:attribute name="child5DateField" type="String"/>
+    <aura:attribute name="child5EndDateField" type="String"/>
     <aura:attribute name="child5ColorField" type="String"/>
+    <aura:attribute name="child5DefaultColor" type="String"/>
     
     <!-- ******************* -->
     <!-- internal attributes --> 

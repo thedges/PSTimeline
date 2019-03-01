@@ -22,6 +22,12 @@ public without sharing class PSTimelineController
       String groupItems = paramMap.get('groupItems');
       String sldsResourceURL = paramMap.get('sldsIconResource');
 
+      String rangeBgColor = null;
+      if (paramMap.containsKey('rangeBgColor'))
+      {
+        rangeBgColor = paramMap.get('rangeBgColor');
+      }
+
       Integer truncSize = 50;
       if (paramMap.containsKey('truncSize')) truncSize = Integer.valueOf(paramMap.get('truncSize'));
 
@@ -117,7 +123,7 @@ public without sharing class PSTimelineController
           item.put('type', itemType);
           item.put('group', groupMap.get('Activity'));
 
-          itemList.add(item);
+          if (e.ActivityDateTime != null) itemList.add(item);
 
         }
 
@@ -173,7 +179,7 @@ public without sharing class PSTimelineController
               }
             }
           }
-          itemList.add(item);
+          if (t.ActivityDate != null) itemList.add(item);
 
         }
       }
@@ -374,7 +380,7 @@ public without sharing class PSTimelineController
 
           if (msg != null && msg.length() > truncSize) item.put('title', msg);
           item.put('start', cc.CreatedDate);
-          item.put('type', itemType);
+          item.put('type', 'range');
           item.put('group', groupMap.get('Knowledge Article'));
 
           itemList.add(item);
@@ -396,6 +402,26 @@ public without sharing class PSTimelineController
           String parentField = paramMap.get('child' + j + 'ParentField');
           String icon = paramMap.get('child' + j + 'Icon');
 
+          String endDateField = null;
+          if (paramMap.containsKey('child' + j + 'EndDateField'))
+          {
+            String tmpStr = paramMap.get('child' + j + 'EndDateField');
+            if (tmpStr != null && tmpStr.length() > 0)
+            {
+               endDateField = tmpStr;
+            }
+          }
+
+          String defaultColor = null;
+          if (paramMap.containsKey('child' + j + 'DefaultColor'))
+          {
+            String tmpStr = paramMap.get('child' + j + 'DefaultColor');
+            if (tmpStr != null && tmpStr.length() > 0)
+            {
+               defaultColor = tmpStr;
+            }
+          }
+
           String objectLabel = Schema.getGlobalDescribe().get(objectName).getDescribe().getLabel();
           if (!groupMap.containsKey(objectLabel))
           {
@@ -404,6 +430,10 @@ public without sharing class PSTimelineController
           Integer groupId = groupMap.get(objectLabel);
 
           String queryStr = 'SELECT Id, ' + labelField + ', ' + dateField;
+          if (endDateField != null && endDateField.length() > 0)
+          {
+            queryStr += ', ' + endDateField;
+          }
           if (colorField != null && colorField.length() > 0)
           {
             queryStr += ', ' + colorField;
@@ -438,24 +468,53 @@ public without sharing class PSTimelineController
                   item.put('content', body);
                 }
 
-                // get background color of item
-                String bgColor = null;
-                if (colorField != null && colorField.length() > 0)
-                {
-                  String tmpColor = (String)rec.get(colorField);
-                  if (tmpColor != null && tmpColor.length() > 0) bgColor = tmpColor;
-                }
-
-                if (bgColor != null) item.put('style', 'background-color: ' + bgColor + ';');
-
+  
                 if (descField != null && descField.length() > 0)
                 {
                   item.put('title', (String)rec.get(descField));
                 }
 
                 item.put('start', (DateTime)rec.get(dateField));
+
+
+
                 item.put('type', itemType);
                 item.put('group', groupId);
+
+
+
+                if (endDateField != null)
+                {
+                  item.put('type', 'range');
+
+                  if (rec.get(endDateField) != null)
+                  {
+                    item.put('end', (DateTime)rec.get(endDateField));
+                  }
+                  else
+                  {
+                    item.put('end', DateTime.now());
+                  }
+                }
+
+              // get background color of item
+               String bgColor = null;
+               if (bgColor == null)
+               {
+                 if (colorField != null && colorField.length() > 0)
+                 {
+                   String tmpColor = (String)rec.get(colorField);
+                   if (tmpColor != null && tmpColor.length() > 0) bgColor = tmpColor;
+                 }
+
+                 if (bgColor == null && item.get('type') == 'range')
+                 {
+                   bgColor = defaultColor;
+                 }
+               }
+
+                if (bgColor != null) item.put('style', 'background-color: ' + bgColor + ';');
+
 
                 itemList.add(item);
               }
