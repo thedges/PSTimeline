@@ -130,7 +130,7 @@ public without sharing class PSTimelineController
         ///////////////
         // get tasks //
         ///////////////
-        for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, Status FROM Task WHERE WhatId = :recordId OR WhoId = :recordId])
+        for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, CreatedDate, Status FROM Task WHERE WhatId = :recordId OR WhoId = :recordId])
         {
           Map<String, Object> item = new Map<String, Object>();
           item.put('id', t.Id);
@@ -158,9 +158,21 @@ public without sharing class PSTimelineController
             item.put('content', body);
           }
 
+          if (t.TaskSubtype == 'Email')
+          {
+            item.put('start', t.CreatedDate);
+          }
+          else if (t.TaskSubtype == 'Call')
+          {
+            item.put('start', t.CreatedDate);
+          }
+          else
+          {
+             item.put('start', t.ActivityDate);
+          }
 
           item.put('title', t.Description);
-          item.put('start', t.ActivityDate);
+
           item.put('type', itemType);
           item.put('group', groupMap.get('Activity'));
 
