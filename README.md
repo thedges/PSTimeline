@@ -1,4 +1,7 @@
 # PSTimeline
+
+THIS SOFTWARE IS COVERED BY [THIS DISCLAIMER](https://raw.githubusercontent.com/thedges/Disclaimer/master/disclaimer.txt).
+
 Timeline components based on [VisJS Timeline](http://visjs.org/docs/timeline/#Overview) to show record activity such as chatter posts, document uploads, tasks, events, case comments, and records on child objects. Primary use cases could be around health care, social services, case history, etc... basically anything you want to show sequence of 'events' and visual reference to time.
 
 There are two primary components in this package:
