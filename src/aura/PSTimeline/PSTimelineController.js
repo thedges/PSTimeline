@@ -17,6 +17,7 @@
         */
         
         var items = null;
+        //var items = new vis.DataSet(null);
         
         // Configuration for the Timeline
         var options = {width: '100%',
@@ -69,6 +70,9 @@
         
     },
     destroyCmp : function (component, event, helper) {
+        console.log('destroyCmp...');
+        var timeline = component.get('v.timeline');
+        timeline.destroy();
         component.destroy();
     },
     centerTimeline : function (component, event, helper) {

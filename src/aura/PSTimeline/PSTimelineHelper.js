@@ -148,10 +148,10 @@
                     timeline.setGroups(tmpGrp);
                 }
                 timeline.setItems(new vis.DataSet(resp.items));
+                timeline.zoomIn(0);
                 component.set('v.totalCount', resp.items.length);
                 //timeline.fit();
                 self.hideSpinner(component);
-                
                 self.showControlIcons(component);
             }
             else 
@@ -275,8 +275,8 @@
                 }
                 
                 component.set("v.context", context);
-                
-                this.getData(component);
+               
+                self.getData(component);
                 
             }
             else 
