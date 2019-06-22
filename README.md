@@ -130,11 +130,11 @@ In the PSTimeline (Object) component you can provide a comma-separated-list (CSV
   
 But you can also provide some more advanced options to each field if needed. The format is '<fieldAPIName>|{option:value,option:value}'. For example, lets say you want to override the standard label for the Type field and provide a default value of 'New'. Your CSV format would look like
   
-  `Subject,Type|{'label':'Case Type','value':'New'},Status,CustomField__c`
+  `Subject,Type|{"label":"Case Type","value":"New"},Status,CustomField__c`
   
 or let's say you want to also enable default wildcard capability (i.e. wrap any text with % chars) for a text field like 'Subject', your string format would be 
 
-  `Subject|{'wildcard':'true'},Type|{'label':'Case Type','value':'New'},Status,CustomField__c`
+  `Subject|{"wildcard":"true"},Type|{"label":"Case Type","value":"New"},Status,CustomField__c`
 
 ### Formula Fields 
 Remember that you can use formula fields anywhere in the configuration properties where you need to provide a field API name for options like item color, item hover details, item label or item grouping. So for color, you can have a formula field like following to show different background colors for items:
