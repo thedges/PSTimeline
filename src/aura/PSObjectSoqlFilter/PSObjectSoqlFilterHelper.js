@@ -7,13 +7,21 @@
         //var filterFields = component.get("v.filterFields");
         //var sobject = component.get("v.objectName");
         
-        map['objectName'] = component.get('v.objectName');
-        map['filterFields'] = component.get('v.filterFields');
+//        map['objectName'] = component.get('v.objectName');
+//        map['filterFields'] = component.get('v.filterFields');
+
+        console.log('map=' + JSON.stringify(map));
         
         var action = component.get("c.prepFilterFields");
+        /*
         action.setParams({
             "params": JSON.stringify(map)
         });
+        */
+       action.setParams({
+        "objectName": component.get('v.objectName'),
+        "filterFields": component.get('v.filterFields')
+       });
         action.setCallback(self, function(actionResult) {
             var state = actionResult.getState();
             console.log('filter=' + JSON.stringify(actionResult.getReturnValue()));
@@ -43,7 +51,7 @@
         var self = this;
         var map = {};
         
-        component.set('v.recList', []);
+        //component.set('v.recList', []);
         self.fireFilterStart(component);
         
         console.debug('processorOptions=' + component.get('v.processorOptions'));

@@ -1,20 +1,22 @@
 public class PSObjectSoqlFilterController {
     @AuraEnabled
-    public static Object prepFilterFields(String params) 
+    public static Object prepFilterFields(String objectName, String filterFields) 
     {
         System.debug('prepFilterFields invoked...');
-        Map<String, String> paramMap = (Map<String, String>)JSON.deserialize(params,   Map<String, String>.class);
-        System.debug(JSON.serializePretty(paramMap));
+        //Map<String, String> paramMap = (Map<String, String>)JSON.deserialize(params,   Map<String, String>.class);
+        //System.debug(JSON.serializePretty(paramMap));
+        //System.debug('filterField.3=' + paramMap.get('filterFields'));
         
         try
         {  
-            String objectName = paramMap.get('objectName');
-            String filterFields = paramMap.get('filterFields');
+            //String objectName = paramMap.get('objectName');
+            //String filterFields = paramMap.get('filterFields');
+            //System.debug('result=' + JSON.serializePretty(PSMetaUtils.getMetaFieldDesc3(objectName, filterFields)));
             return PSMetaUtils.getMetaFieldDesc3(objectName, filterFields);
         }
         catch (exception e)
         {
-            throw new AuraHandledException(e.getMessage());
+            throw new AuraHandledException(e.getTypeName() + ' - ' + e.getMessage() + ' [Line: ' + e.getLineNumber() + ']');
         }
         
     }
