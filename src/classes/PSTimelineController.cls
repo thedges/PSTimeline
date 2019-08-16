@@ -392,7 +392,7 @@ public without sharing class PSTimelineController
 
           if (msg != null && msg.length() > truncSize) item.put('title', msg);
           item.put('start', cc.CreatedDate);
-          item.put('type', 'range');
+          item.put('type', itemType);
           item.put('group', groupMap.get('Knowledge Article'));
 
           itemList.add(item);
