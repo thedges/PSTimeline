@@ -25,6 +25,18 @@ public without sharing class PSTimelineController
       Map<String, Integer> groupMap = new Map<String, Integer>();
       Integer groupNum = 0;
 
+      String locale = paramMap.get('locale');
+      if (locale == 'fr')
+      {
+        GROUP_RECORD = 'Record';
+        GROUP_ACTIVITY = 'Activité';
+        GROUP_CHATTER = 'Bavarder';
+        GROUP_CONTENT = 'Contenu';
+        GROUP_CASE_COMMENT = 'Commentaire de l\'affaire';
+        GROUP_CASE_MILESTONE = 'Milestone Case';
+        GROUP_KA = 'Article de connaissance';
+      }
+
       String recordId = paramMap.get('recordId');
       String itemType = paramMap.get('itemType');
       String groupItems = paramMap.get('groupItems');

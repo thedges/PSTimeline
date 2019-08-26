@@ -4,6 +4,7 @@
         
         // DOM element where the Timeline will be attached
         var container = document.getElementById(globalId + '_timeline');
+        var locale = component.get('v.locale');
         
         /*
         var items = new vis.DataSet([
@@ -25,6 +26,7 @@
                        margin: {
                            item: 20
                        },
+                       locale: locale,
                        onInitialDrawComplete: function(){helper.initComplete(component)}};
         
         var today = new Date();

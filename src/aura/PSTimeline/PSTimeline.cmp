@@ -1,5 +1,5 @@
 <aura:component controller="PSTimelineController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
-    <ltng:require styles="{!$Resource.VisJS_v4_21_0 + '/vis-4.21.0/dist/vis.min.css'}" scripts="{!$Resource.VisJS_v4_21_0 + '/vis-4.21.0/dist/vis.min.js'}" afterScriptsLoaded="{!c.jsLoaded}"/>
+    <ltng:require styles="{!$Resource.VisJS_v4_21_0 + '/vis-4.21.0/dist/vis.min.css'}" scripts="{!$Resource.MomentWithLocales281 + ',' + $Resource.VisJS_v4_21_0 + '/vis-4.21.0/dist/vis.min.js'}" afterScriptsLoaded="{!c.jsLoaded}"/>
     
     <!-- ************************ -->
     <!-- configuration attributes -->
@@ -12,6 +12,7 @@
     <aura:attribute name="daysBefore" type="Integer"/>
     <aura:attribute name="daysAfter" type="Integer"/>
     <aura:attribute name="truncSize" type="Integer" default="50"/>
+    <aura:attribute name="locale" type="String" default="en"/>
 
     <aura:attribute name="navToNewWindow" type="Boolean" default="false"/>
     <aura:attribute name="tooltips" type="Boolean" default="false"/>

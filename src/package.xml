@@ -16,6 +16,7 @@
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
+        <members>MomentWithLocales281</members>
         <members>PSTimelineCalendar</members>
         <members>PSTimelineCenter</members>
         <members>PSTimelineFilter</members>
