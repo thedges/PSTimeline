@@ -1,5 +1,13 @@
 public without sharing class PSTimelineController
 {
+  private static String GROUP_RECORD = 'Record';
+  private static String GROUP_ACTIVITY = 'Activity';
+  private static String GROUP_CHATTER = 'Chatter';
+  private static String GROUP_CONTENT = 'Content';
+  private static String GROUP_CASE_COMMENT = 'Case Comment';
+  private static String GROUP_CASE_MILESTONE = 'Case Milestone';
+  private static String GROUP_KA = 'Knowledge Article';
+
   @AuraEnabled
   public static Object queryData(String params)
   {
@@ -22,19 +30,13 @@ public without sharing class PSTimelineController
       String groupItems = paramMap.get('groupItems');
       String sldsResourceURL = paramMap.get('sldsIconResource');
 
-      String rangeBgColor = null;
-      if (paramMap.containsKey('rangeBgColor'))
-      {
-        rangeBgColor = paramMap.get('rangeBgColor');
-      }
-
       Integer truncSize = 50;
       if (paramMap.containsKey('truncSize')) truncSize = Integer.valueOf(paramMap.get('truncSize'));
 
       String networkPrefix = null;
       if (paramMap.containsKey('networkPrefix')) networkPrefix = paramMap.get('networkPrefix');
 
-      groupMap.put('Record', groupMap.size());
+      groupMap.put(GROUP_RECORD, groupMap.size());
 
 
 
@@ -73,7 +75,7 @@ public without sharing class PSTimelineController
 
           item.put('start', (Datetime)recList[0].get('CreatedDate'));
           item.put('type', itemType);
-          item.put('group', groupMap.get('Record'));
+          item.put('group', groupMap.get(GROUP_RECORD));
 
           itemList.add(item);
         }
@@ -85,7 +87,7 @@ public without sharing class PSTimelineController
       ////////////////////
       if (paramMap.get('activityFlag') == 'true')
       {
-        groupMap.put('Activity', groupMap.size());
+        groupMap.put(GROUP_ACTIVITY, groupMap.size());
           
         String taskIcon = paramMap.get('taskIcon');     // standard:task
         String eventIcon = paramMap.get('eventIcon');   // standard:event
@@ -121,16 +123,16 @@ public without sharing class PSTimelineController
           }
             
           item.put('type', itemType);
-          item.put('group', groupMap.get('Activity'));
+          item.put('group', groupMap.get(GROUP_ACTIVITY));
 
-          if (e.ActivityDateTime != null) itemList.add(item);
+          itemList.add(item);
 
         }
 
         ///////////////
         // get tasks //
         ///////////////
-        for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, CreatedDate, Status FROM Task WHERE WhatId = :recordId OR WhoId = :recordId])
+        for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, Status FROM Task WHERE WhatId = :recordId OR WhoId = :recordId])
         {
           Map<String, Object> item = new Map<String, Object>();
           item.put('id', t.Id);
@@ -158,23 +160,11 @@ public without sharing class PSTimelineController
             item.put('content', body);
           }
 
-          if (t.TaskSubtype == 'Email')
-          {
-            item.put('start', t.CreatedDate);
-          }
-          else if (t.TaskSubtype == 'Call')
-          {
-            item.put('start', t.CreatedDate);
-          }
-          else
-          {
-             item.put('start', t.ActivityDate);
-          }
 
           item.put('title', t.Description);
-
+          item.put('start', t.ActivityDate);
           item.put('type', itemType);
-          item.put('group', groupMap.get('Activity'));
+          item.put('group', groupMap.get(GROUP_ACTIVITY));
 
           if (t.TaskSubtype == 'Task')
           {
@@ -191,7 +181,7 @@ public without sharing class PSTimelineController
               }
             }
           }
-          if (t.ActivityDate != null) itemList.add(item);
+          itemList.add(item);
 
         }
       }
@@ -201,7 +191,7 @@ public without sharing class PSTimelineController
       ///////////////
       if (paramMap.get('contentFlag') == 'true')
       {
-        groupMap.put('Content', groupMap.size());
+        groupMap.put(GROUP_CONTENT, groupMap.size());
           
         for (ContentDocumentLink cdl : [SELECT ContentDocumentId, ContentDocument.FileType, ContentDocument.Title, ContentDocument.CreatedDate, LinkedEntityId, ShareType, SystemModstamp, Visibility
                                         FROM ContentDocumentLink
@@ -229,7 +219,7 @@ public without sharing class PSTimelineController
           if (label.length() > truncSize) item.put('title', label);
           item.put('start', cdl.ContentDocument.CreatedDate);
           item.put('type', itemType);
-          item.put('group', groupMap.get('Content'));
+          item.put('group', groupMap.get(GROUP_CONTENT));
 
           itemList.add(item);
 
@@ -241,7 +231,7 @@ public without sharing class PSTimelineController
       ////////////////////////////
       if (paramMap.get('chatterFlag') == 'true')
       {
-        groupMap.put('Chatter', groupMap.size());
+        groupMap.put(GROUP_CHATTER, groupMap.size());
           
         for (FeedItem fi : [SELECT Id, Body, LastModifiedDate
                             FROM FeedItem
@@ -267,7 +257,7 @@ public without sharing class PSTimelineController
           if (fi.Body.length() > truncSize) item.put('title', fi.Body);
           item.put('start', fi.LastModifiedDate);
           item.put('type', itemType);
-          item.put('group', groupMap.get('Chatter'));
+          item.put('group', groupMap.get(GROUP_CHATTER));
 
           itemList.add(item);
 
@@ -279,7 +269,7 @@ public without sharing class PSTimelineController
       ///////////////////////
       if (paramMap.get('caseCommentFlag') == 'true')
       {
-        groupMap.put('Case Comment', groupMap.size());
+        groupMap.put(GROUP_CASE_COMMENT, groupMap.size());
           
         for (CaseComment cc : [SELECT Id, CommentBody, LastModifiedDate
                                FROM CaseComment
@@ -306,7 +296,7 @@ public without sharing class PSTimelineController
           if (cc.CommentBody.length() > truncSize) item.put('title', cc.CommentBody);
           item.put('start', cc.LastModifiedDate);
           item.put('type', itemType);
-          item.put('group', groupMap.get('Case Comment'));
+          item.put('group', groupMap.get(GROUP_CASE_COMMENT));
 
           itemList.add(item);
 
@@ -318,7 +308,7 @@ public without sharing class PSTimelineController
       /////////////////////////
       if (paramMap.get('caseMilestoneFlag') == 'true')
       {
-        groupMap.put('Case Milestone', groupMap.size());
+        groupMap.put(GROUP_CASE_MILESTONE, groupMap.size());
           
         for (CaseMilestone cc : [SELECT Id, MilestoneType.Name, IsViolated, IsCompleted, TargetDate
                                FROM CaseMilestone
@@ -353,7 +343,7 @@ public without sharing class PSTimelineController
           if (msg != null && msg.length() > truncSize) item.put('title', msg);
           item.put('start', cc.TargetDate);
           item.put('type', itemType);
-          item.put('group', groupMap.get('Case Milestone'));
+          item.put('group', groupMap.get(GROUP_CASE_MILESTONE));
           if (cc.IsViolated) item.put('className', 'Overdue');
 
           itemList.add(item);
@@ -366,7 +356,7 @@ public without sharing class PSTimelineController
       ////////////////////////////
       if (paramMap.get('kaFlag') == 'true')
       {
-        groupMap.put('Knowledge Article', groupMap.size());
+        groupMap.put(GROUP_KA, groupMap.size());
           
         for (CaseArticle cc : [SELECT Id, KnowledgeArticleId, KnowledgeArticleVersionId, KnowledgeArticleVersion.Title, CreatedDate  
                                    FROM CaseArticle 
@@ -393,7 +383,7 @@ public without sharing class PSTimelineController
           if (msg != null && msg.length() > truncSize) item.put('title', msg);
           item.put('start', cc.CreatedDate);
           item.put('type', itemType);
-          item.put('group', groupMap.get('Knowledge Article'));
+          item.put('group', groupMap.get(GROUP_KA));
 
           itemList.add(item);
 
@@ -414,26 +404,6 @@ public without sharing class PSTimelineController
           String parentField = paramMap.get('child' + j + 'ParentField');
           String icon = paramMap.get('child' + j + 'Icon');
 
-          String endDateField = null;
-          if (paramMap.containsKey('child' + j + 'EndDateField'))
-          {
-            String tmpStr = paramMap.get('child' + j + 'EndDateField');
-            if (tmpStr != null && tmpStr.length() > 0)
-            {
-               endDateField = tmpStr;
-            }
-          }
-
-          String defaultColor = null;
-          if (paramMap.containsKey('child' + j + 'DefaultColor'))
-          {
-            String tmpStr = paramMap.get('child' + j + 'DefaultColor');
-            if (tmpStr != null && tmpStr.length() > 0)
-            {
-               defaultColor = tmpStr;
-            }
-          }
-
           String objectLabel = Schema.getGlobalDescribe().get(objectName).getDescribe().getLabel();
           if (!groupMap.containsKey(objectLabel))
           {
@@ -442,10 +412,6 @@ public without sharing class PSTimelineController
           Integer groupId = groupMap.get(objectLabel);
 
           String queryStr = 'SELECT Id, ' + labelField + ', ' + dateField;
-          if (endDateField != null && endDateField.length() > 0)
-          {
-            queryStr += ', ' + endDateField;
-          }
           if (colorField != null && colorField.length() > 0)
           {
             queryStr += ', ' + colorField;
@@ -480,53 +446,24 @@ public without sharing class PSTimelineController
                   item.put('content', body);
                 }
 
-  
+                // get background color of item
+                String bgColor = null;
+                if (colorField != null && colorField.length() > 0)
+                {
+                  String tmpColor = (String)rec.get(colorField);
+                  if (tmpColor != null && tmpColor.length() > 0) bgColor = tmpColor;
+                }
+
+                if (bgColor != null) item.put('style', 'background-color: ' + bgColor + ';');
+
                 if (descField != null && descField.length() > 0)
                 {
                   item.put('title', (String)rec.get(descField));
                 }
 
                 item.put('start', (DateTime)rec.get(dateField));
-
-
-
                 item.put('type', itemType);
                 item.put('group', groupId);
-
-
-
-                if (endDateField != null)
-                {
-                  item.put('type', 'range');
-
-                  if (rec.get(endDateField) != null)
-                  {
-                    item.put('end', (DateTime)rec.get(endDateField));
-                  }
-                  else
-                  {
-                    item.put('end', DateTime.now());
-                  }
-                }
-
-              // get background color of item
-               String bgColor = null;
-               if (bgColor == null)
-               {
-                 if (colorField != null && colorField.length() > 0)
-                 {
-                   String tmpColor = (String)rec.get(colorField);
-                   if (tmpColor != null && tmpColor.length() > 0) bgColor = tmpColor;
-                 }
-
-                 if (bgColor == null && item.get('type') == 'range')
-                 {
-                   bgColor = defaultColor;
-                 }
-               }
-
-                if (bgColor != null) item.put('style', 'background-color: ' + bgColor + ';');
-
 
                 itemList.add(item);
               }
