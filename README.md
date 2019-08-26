@@ -28,6 +28,7 @@ There are two primary components in this package:
   
 <b>This Lightning component is very configurable with following options:</b>
 
+   - <b>Locale</b> - specify locale of following options: 'en' or 'fr'
    - <b>Title</b> - a title string to show at top-left of component
    - <b>Item Type</b> - item type to show in timeline (box or range)
    - <b>SLDS Icon Static Resource Reference</b> - reference to static resource file that stores the SLDS icons (default is "/resource/SLDS261")
