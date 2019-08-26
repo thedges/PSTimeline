@@ -13,6 +13,7 @@
     <aura:attribute name="daysAfter" type="Integer"/>
     <aura:attribute name="truncSize" type="Integer" default="50"/>
     <aura:attribute name="locale" type="String" default="en"/>
+    <aura:attribute name="defaultBGColor" type="String" default="#d5ddf5"/>
 
     <aura:attribute name="navToNewWindow" type="Boolean" default="false"/>
     <aura:attribute name="tooltips" type="Boolean" default="false"/>

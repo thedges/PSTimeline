@@ -8,6 +8,7 @@
     <design:attribute name="maxHeight" label="Maximum height of component" />
     <design:attribute name="daysBefore" label="Days before current date for initial timeline" />
     <design:attribute name="daysAfter" label="Days after current date for initial timeline" />
+    <design:attribute name="defaultBGColor" label="Default background color of items (default: #d5ddf5)" />
 
     <design:attribute name="navToNewWindow" label="Nav to new window on dbl-click" />
     <design:attribute name="tooltips" label="Show hover details on items" />

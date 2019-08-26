@@ -12,6 +12,7 @@
         map['truncSize'] = component.get('v.truncSize');
         map['groupItems'] = component.get('v.groupItems');
         map['locale'] = component.get('v.locale');
+        map['defaultBGColor'] = component.get('v.defaultBGColor');
         
         var context = component.get('v.context');
         if (context.networkPrefix != null)

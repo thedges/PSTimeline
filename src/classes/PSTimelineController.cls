@@ -1,5 +1,7 @@
 public without sharing class PSTimelineController
 {
+  private static String CREATED = 'created';
+  private static String ITEM_BG_COLOR = '#d5ddf5';
   private static String GROUP_RECORD = 'Record';
   private static String GROUP_ACTIVITY = 'Activity';
   private static String GROUP_CHATTER = 'Chatter';
@@ -28,6 +30,7 @@ public without sharing class PSTimelineController
       String locale = paramMap.get('locale');
       if (locale == 'fr')
       {
+        CREATED = 'créé';
         GROUP_RECORD = 'Record';
         GROUP_ACTIVITY = 'Activité';
         GROUP_CHATTER = 'Bavarder';
@@ -35,6 +38,12 @@ public without sharing class PSTimelineController
         GROUP_CASE_COMMENT = 'Commentaire de l\'affaire';
         GROUP_CASE_MILESTONE = 'Milestone Case';
         GROUP_KA = 'Article de connaissance';
+      }
+
+      String defaultBGColor = paramMap.get('defaultBGColor');
+      if (defaultBGColor != null)
+      {
+        ITEM_BG_COLOR = defaultBGColor;
       }
 
       String recordId = paramMap.get('recordId');
@@ -74,7 +83,7 @@ public without sharing class PSTimelineController
           //item.put('id', recList[0].Id);
 
           String iconHTML = getIconHTML('custom:custom9', 'x-small', networkPrefix, sldsResourceURL);
-          String body = objectLabel + ' created!';
+          String body = objectLabel + ' ' + CREATED + '!';
 
           if (iconHTML != null)
           {
@@ -88,6 +97,7 @@ public without sharing class PSTimelineController
           item.put('start', (Datetime)recList[0].get('CreatedDate'));
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_RECORD));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
 
           itemList.add(item);
         }
@@ -136,6 +146,7 @@ public without sharing class PSTimelineController
             
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_ACTIVITY));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
 
           itemList.add(item);
 
@@ -177,6 +188,7 @@ public without sharing class PSTimelineController
           item.put('start', t.ActivityDate);
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_ACTIVITY));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
 
           if (t.TaskSubtype == 'Task')
           {
@@ -232,6 +244,7 @@ public without sharing class PSTimelineController
           item.put('start', cdl.ContentDocument.CreatedDate);
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_CONTENT));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
 
           itemList.add(item);
 
@@ -270,6 +283,7 @@ public without sharing class PSTimelineController
           item.put('start', fi.LastModifiedDate);
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_CHATTER));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
 
           itemList.add(item);
 
@@ -309,6 +323,7 @@ public without sharing class PSTimelineController
           item.put('start', cc.LastModifiedDate);
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_CASE_COMMENT));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
 
           itemList.add(item);
 
@@ -356,6 +371,7 @@ public without sharing class PSTimelineController
           item.put('start', cc.TargetDate);
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_CASE_MILESTONE));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
           if (cc.IsViolated) item.put('className', 'Overdue');
 
           itemList.add(item);
@@ -395,7 +411,9 @@ public without sharing class PSTimelineController
           if (msg != null && msg.length() > truncSize) item.put('title', msg);
           item.put('start', cc.CreatedDate);
           item.put('type', itemType);
+  
           item.put('group', groupMap.get(GROUP_KA));
+          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
 
           itemList.add(item);
 
@@ -459,7 +477,7 @@ public without sharing class PSTimelineController
                 }
 
                 // get background color of item
-                String bgColor = null;
+                String bgColor = ITEM_BG_COLOR;
                 if (colorField != null && colorField.length() > 0)
                 {
                   String tmpColor = (String)rec.get(colorField);
@@ -487,7 +505,7 @@ public without sharing class PSTimelineController
       //String dataJSON = JSON.serialize(itemList, true);
       //resp.data = dataJSON;
       Map<String, Object> resp = new Map<String, Object>();
-      resp.put('groups', createGroupList(groupMap));
+      resp.put('groups', createGroupList(groupMap, '#259feb'));
       resp.put('items', itemList);
       return  resp;
 
@@ -501,7 +519,7 @@ public without sharing class PSTimelineController
 
   }
 
-  private static List<Object> createGroupList(Map<String, Integer> groupMap)
+  private static List<Object> createGroupList(Map<String, Integer> groupMap, String bgColor)
   {
     List<Object> gList = new List<Object>();
     Integer i = 0;
@@ -511,7 +529,7 @@ public without sharing class PSTimelineController
       gmap.put('id', groupMap.get(key));
       gmap.put('content', key);
       gmap.put('visible', true);
-      gmap.put('style', 'font-weight: bold;color:#259feb;');
+      gmap.put('style', 'font-weight: bold;color:' + bgColor + ';');
       gList.add(gmap);
     }
     return gList;
