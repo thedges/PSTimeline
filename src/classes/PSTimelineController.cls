@@ -371,8 +371,14 @@ public without sharing class PSTimelineController
           item.put('start', cc.TargetDate);
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_CASE_MILESTONE));
-          if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
-          if (cc.IsViolated) item.put('className', 'Overdue');
+          
+          if (cc.IsViolated) 
+          {
+            item.put('className', 'Overdue');
+          }
+          else {
+            if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
+          }
 
           itemList.add(item);
 
