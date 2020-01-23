@@ -155,11 +155,16 @@ public without sharing class PSTimelineController
         ///////////////
         // get tasks //
         ///////////////
-        for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, Status FROM Task WHERE WhatId = :recordId OR WhoId = :recordId])
+        for (Task t : [SELECT Id, Subject, Description, TaskSubtype, ActivityDate, CreatedDate, Status FROM Task WHERE WhatId = :recordId OR WhoId = :recordId])
         {
           Map<String, Object> item = new Map<String, Object>();
           item.put('id', t.Id);
 
+          Datetime dttm = t.ActivityDate;
+          if (t.ActivityDate == null)
+          {
+            dttm = t.CreatedDate;
+          }
 
           String icon = taskIcon;
           if (t.TaskSubtype == 'Email')
@@ -185,7 +190,7 @@ public without sharing class PSTimelineController
 
 
           item.put('title', t.Description);
-          item.put('start', t.ActivityDate);
+          item.put('start', dttm);
           item.put('type', itemType);
           item.put('group', groupMap.get(GROUP_ACTIVITY));
           if (ITEM_BG_COLOR != '#d5ddf5') item.put('style', 'background-color:' + ITEM_BG_COLOR + ';');
