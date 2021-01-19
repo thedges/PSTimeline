@@ -69,7 +69,10 @@ The component supports ability to show child records for up to 5 related child o
    - <b>Child Object</b> - the sObject API name for this child 
    - <b>Child Parent Field</b> - the sObject Field API name that contains the lookup/master-detail to the parent record 
    - <b>Child Label Field</b> - the sObject Field API name that contains the label to show in the timeline item 
-   - <b>Child Date Field</b> - the sObject Field API name that contains the date or date/time field to plot on timeline   
+   - <b>Child Date Field</b> - the sObject Field API name that contains the date or date/time field to plot on timeline 
+   - <b>Child End Date Field</b> - the sObject Field API name that contains the end date or date/time field to plot on timeline (if value is provided, then a 'range' item will be created in the timeline)
+   - <b>Color Field</b> - the sObject Field API name that contains a string value to display as the color for the item (should be in hex '#FFFFFF' type format)
+   - <b>Default Color</b> - a string for default color for this timeline item (should be in hex '#FFFFFF' type format)
    
 
 ## PSTimeline (Object)
