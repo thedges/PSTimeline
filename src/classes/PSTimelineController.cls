@@ -445,6 +445,26 @@ public without sharing class PSTimelineController
           String parentField = paramMap.get('child' + j + 'ParentField');
           String icon = paramMap.get('child' + j + 'Icon');
 
+          String endDateField = null;
+          if (paramMap.containsKey('child' + j + 'EndDateField'))
+          {
+            String tmpStr = paramMap.get('child' + j + 'EndDateField');
+            if (tmpStr != null && tmpStr.length() > 0)
+            {
+               endDateField = tmpStr;
+            }
+          }
+
+          String defaultColor = null;
+          if (paramMap.containsKey('child' + j + 'DefaultColor'))
+          {
+            String tmpStr = paramMap.get('child' + j + 'DefaultColor');
+            if (tmpStr != null && tmpStr.length() > 0)
+            {
+               defaultColor = tmpStr;
+            }
+          }
+
           String objectLabel = Schema.getGlobalDescribe().get(objectName).getDescribe().getLabel();
           if (!groupMap.containsKey(objectLabel))
           {
@@ -453,6 +473,10 @@ public without sharing class PSTimelineController
           Integer groupId = groupMap.get(objectLabel);
 
           String queryStr = 'SELECT Id, ' + labelField + ', ' + dateField;
+          if (endDateField != null && endDateField.length() > 0)
+          {
+            queryStr += ', ' + endDateField;
+          }
           if (colorField != null && colorField.length() > 0)
           {
             queryStr += ', ' + colorField;
@@ -505,6 +529,20 @@ public without sharing class PSTimelineController
                 item.put('start', (DateTime)rec.get(dateField));
                 item.put('type', itemType);
                 item.put('group', groupId);
+
+                if (endDateField != null)
+                {
+                  item.put('type', 'range');
+
+                  if (rec.get(endDateField) != null)
+                  {
+                    item.put('end', (DateTime)rec.get(endDateField));
+                  }
+                  else
+                  {
+                    item.put('end', DateTime.now());
+                  }
+                }
 
                 itemList.add(item);
               }
